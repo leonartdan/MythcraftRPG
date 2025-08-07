@@ -1,0 +1,280 @@
+{
+  "Actor": {
+    "types": ["character", "npc"],
+    "templates": {
+      "base": {
+        "health": {
+          "value": 20,
+          "max": 20,
+          "temp": 0
+        },
+        "actionPoints": {
+          "value": 3,
+          "max": 3,
+          "carried": 0,
+          "carryLimit": 1
+        },
+        "speed": {
+          "value": 20,
+          "units": "ft"
+        },
+        "attributes": {
+          "strength": {
+            "value": 0,
+            "mod": 0
+          },
+          "dexterity": {
+            "value": 0,
+            "mod": 0
+          },
+          "endurance": {
+            "value": 0,
+            "mod": 0
+          },
+          "intelligence": {
+            "value": 0,
+            "mod": 0
+          },
+          "awareness": {
+            "value": 0,
+            "mod": 0
+          },
+          "coordination": {
+            "value": 0,
+            "mod": 0
+          },
+          "willpower": {
+            "value": 0,
+            "mod": 0
+          },
+          "presence": {
+            "value": 0,
+            "mod": 0
+          }
+        },
+        "defenses": {
+          "physical": {
+            "value": 10,
+            "bonus": 0
+          },
+          "mental": {
+            "value": 10,
+            "bonus": 0
+          },
+          "social": {
+            "value": 10,
+            "bonus": 0
+          }
+        },
+        "level": {
+          "value": 1
+        },
+        "experience": {
+          "value": 0,
+          "max": 1000
+        },
+        "notes": ""
+      },
+      "character": {
+        "lineage": {
+          "name": "",
+          "sublineage": "",
+          "abilities": []
+        },
+        "background": {
+          "name": "",
+          "description": ""
+        },
+        "occupation": {
+          "name": "",
+          "tags": []
+        },
+        "profession": {
+          "name": "",
+          "skillPoints": 0
+        },
+        "biography": {
+          "value": "",
+          "appearance": "",
+          "backstory": "",
+          "goals": ""
+        },
+        "talents": {
+          "known": [],
+          "available": 1
+        },
+        "magicSources": {
+          "arcane": false,
+          "divine": false,
+          "occult": false,
+          "primal": false,
+          "psionic": false
+        }
+      },
+      "npc": {
+        "cr": {
+          "value": 1
+        },
+        "type": {
+          "value": "humanoid"
+        },
+        "size": {
+          "value": "medium"
+        }
+      }
+    },
+    "character": {
+      "templates": ["base", "character"]
+    },
+    "npc": {
+      "templates": ["base", "npc"]
+    }
+  },
+  "Item": {
+    "types": ["weapon", "armor", "equipment", "talent", "spell", "skill"],
+    "templates": {
+      "base": {
+        "description": "",
+        "quantity": 1,
+        "weight": 0,
+        "cost": {
+          "value": 0,
+          "denomination": "gp"
+        },
+        "rarity": "common",
+        "identified": true
+      },
+      "physical": {
+        "equipped": false,
+        "attuned": false
+      },
+      "magical": {
+        "magicSource": "arcane",
+        "school": "",
+        "level": 1,
+        "components": {
+          "verbal": false,
+          "somatic": false,
+          "material": false,
+          "focus": false
+        },
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "none",
+          "formula": ""
+        }
+      }
+    },
+    "weapon": {
+      "templates": ["base", "physical"],
+      "weaponType": "melee",
+      "damage": {
+        "parts": [["1d6", "bludgeoning"]],
+        "versatile": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "ft"
+      },
+      "properties": [],
+      "proficient": false,
+      "attributes": {
+        "attack": "strength",
+        "damage": "strength"
+      },
+      "actionCost": 2
+    },
+    "armor": {
+      "templates": ["base", "physical"],
+      "type": {
+        "value": "light",
+        "baseItem": ""
+      },
+      "defense": {
+        "value": 10,
+        "dex": null,
+        "type": "physical"
+      },
+      "stealth": false,
+      "proficient": false
+    },
+    "equipment": {
+      "templates": ["base", "physical"],
+      "uses": {
+        "value": 0,
+        "max": 0,
+        "per": null,
+        "recovery": ""
+      }
+    },
+    "talent": {
+      "templates": ["base"],
+      "talentType": "general",
+      "prerequisites": [],
+      "benefits": [],
+      "tags": []
+    },
+    "spell": {
+      "templates": ["base", "magical"],
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": null,
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": null,
+        "amount": null
+      },
+      "ability": null,
+      "actionType": "spell",
+      "attackBonus": "",
+      "chatFlavor": "",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "actionCost": 3
+    },
+    "skill": {
+      "templates": ["base"],
+      "ability": "intelligence",
+      "ranks": 0,
+      "bonus": 0,
+      "proficient": false,
+      "tags": []
+    }
+  }
+}

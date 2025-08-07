@@ -1,0 +1,531 @@
+/* MythCraft RPG System Styles */
+
+.mythcraft {
+  /* Base Variables */
+  --color-primary: #4a90a4;
+  --color-secondary: #6b5b95;
+  --color-accent: #d4af37;
+  --color-danger: #c73e1d;
+  --color-success: #3fb618;
+  --border-groove: inset 0 0 0 1px #000000, inset 0 0 0 2px #c9c7b8, inset 0 0 0 3px #000000;
+}
+
+/* === WINDOW APPLICATIONS === */
+.mythcraft.sheet {
+  font-family: "Signika", sans-serif;
+  background: linear-gradient(135deg, #f5f5dc 0%, #e6ddd4 100%);
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+}
+
+.mythcraft.sheet .window-content {
+  padding: 5px;
+  background: none;
+}
+
+/* === SHEET HEADER === */
+.mythcraft .sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+  border-radius: 6px;
+  color: white;
+}
+
+.mythcraft .sheet-header .profile-img {
+  border: 2px solid white;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.mythcraft .sheet-header .header-fields {
+  flex: 1;
+}
+
+.mythcraft .sheet-header .charname {
+  margin: 0 0 10px 0;
+}
+
+.mythcraft .sheet-header .charname input {
+  font-size: 24px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  border-radius: 4px;
+}
+
+/* === TABS === */
+.mythcraft .tabs {
+  border-bottom: 2px solid var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.mythcraft .tabs .item {
+  background: #e6ddd4;
+  border: 1px solid #8b4513;
+  color: #8b4513;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 6px 6px 0 0;
+  margin-right: 2px;
+}
+
+.mythcraft .tabs .item.active {
+  background: var(--color-primary);
+  color: white;
+  border-bottom-color: var(--color-primary);
+}
+
+/* === GRID LAYOUTS === */
+.mythcraft .grid {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.mythcraft .grid-2col {
+  grid-template-columns: 1fr 1fr;
+}
+
+.mythcraft .grid-3col {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.mythcraft .grid-4col {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.mythcraft .grid-5col {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+/* === RESOURCES === */
+.mythcraft .resource {
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid var(--color-primary);
+  border-radius: 6px;
+  padding: 8px;
+  text-align: center;
+}
+
+.mythcraft .resource-label {
+  font-weight: bold;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.mythcraft .resource input[type="number"] {
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px;
+  width: 60px;
+}
+
+.mythcraft .health {
+  border-color: var(--color-danger);
+}
+
+.mythcraft .health .resource-label {
+  color: var(--color-danger);
+}
+
+.mythcraft .action-points {
+  border-color: var(--color-accent);
+}
+
+.mythcraft .action-points .resource-label {
+  color: var(--color-accent);
+}
+
+.mythcraft .resource-actions {
+  margin-top: 8px;
+}
+
+.mythcraft .resource-actions button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-size: 11px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.mythcraft .resource-actions button:hover {
+  background: var(--color-secondary);
+}
+
+/* === ATTRIBUTES === */
+.mythcraft .attributes {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.mythcraft .attributes h3 {
+  text-align: center;
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.mythcraft .attribute {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  text-align: center;
+}
+
+.mythcraft .attribute label {
+  font-weight: bold;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.mythcraft .attribute input[type="number"] {
+  width: 50px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+.mythcraft .attribute-mod {
+  font-size: 12px;
+  color: #666;
+  font-weight: bold;
+}
+
+.mythcraft .attribute-roll {
+  color: var(--color-primary);
+  margin-left: 4px;
+}
+
+.mythcraft .attribute-roll:hover {
+  color: var(--color-secondary);
+}
+
+/* === DEFENSES === */
+.mythcraft .defenses {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.mythcraft .defenses h3 {
+  text-align: center;
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.mythcraft .defense {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  text-align: center;
+}
+
+.mythcraft .defense label {
+  font-weight: bold;
+  color: var(--color-secondary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mythcraft .defense-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mythcraft .defense input[type="number"] {
+  width: 60px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* === MAGIC SOURCES === */
+.mythcraft .magic-sources {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.mythcraft .magic-sources h3 {
+  text-align: center;
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.mythcraft .magic-sources label {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: var(--color-secondary);
+}
+
+.mythcraft .magic-sources input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* === ITEMS LISTS === */
+.mythcraft .items-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-primary);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px 6px 0 0;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.mythcraft .items-header .item-create {
+  color: white;
+  font-size: 16px;
+}
+
+.mythcraft .items-header .item-create:hover {
+  color: var(--color-accent);
+}
+
+.mythcraft .items-list {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--color-primary);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  margin-bottom: 15px;
+  padding: 0;
+  list-style: none;
+}
+
+.mythcraft .items-list .item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.mythcraft .items-list .item:last-child {
+  border-bottom: none;
+}
+
+.mythcraft .items-list .item:hover {
+  background: rgba(74, 144, 164, 0.1);
+}
+
+.mythcraft .items-list .item-header {
+  background: rgba(74, 144, 164, 0.2);
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.mythcraft .items-list .item-name {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.mythcraft .items-list .item-image {
+  margin-right: 8px;
+}
+
+.mythcraft .items-list .item-image img {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.mythcraft .items-list h4 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.mythcraft .items-list .item-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 100px;
+  justify-content: flex-end;
+}
+
+.mythcraft .items-list .item-control {
+  color: var(--color-primary);
+  font-size: 14px;
+  padding: 2px;
+}
+
+.mythcraft .items-list .item-control:hover {
+  color: var(--color-secondary);
+}
+
+.mythcraft .item-delete:hover {
+  color: var(--color-danger) !important;
+}
+
+/* === SPELL LISTS === */
+.mythcraft .spell-list {
+  margin-bottom: 20px;
+}
+
+.mythcraft .spell-list h4 {
+  background: var(--color-secondary);
+  color: white;
+  padding: 6px 12px;
+  margin: 0 0 -1px 0;
+  border-radius: 4px 4px 0 0;
+  font-size: 14px;
+}
+
+/* === FORM ELEMENTS === */
+.mythcraft .form-group {
+  margin-bottom: 15px;
+}
+
+.mythcraft .form-group label {
+  display: block;
+  font-weight: bold;
+  color: var(--color-secondary);
+  margin-bottom: 4px;
+}
+
+.mythcraft textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.mythcraft input[type="text"],
+.mythcraft input[type="number"],
+.mythcraft select {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 4px 6px;
+  font-family: inherit;
+}
+
+.mythcraft input[type="text"]:focus,
+.mythcraft input[type="number"]:focus,
+.mythcraft textarea:focus,
+.mythcraft select:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 144, 164, 0.2);
+}
+
+/* === BUTTONS === */
+.mythcraft button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.mythcraft button:hover {
+  background: var(--color-secondary);
+}
+
+.mythcraft button:active {
+  transform: translateY(1px);
+}
+
+.mythcraft .rollable {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.mythcraft .rollable:hover {
+  color: var(--color-accent);
+}
+
+/* === CHARACTER BACKGROUND INFO === */
+.mythcraft .lineage,
+.mythcraft .background,
+.mythcraft .occupation,
+.mythcraft .profession {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.mythcraft .lineage label,
+.mythcraft .background label,
+.mythcraft .occupation label,
+.mythcraft .profession label {
+  font-weight: bold;
+  color: var(--color-secondary);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.mythcraft .lineage input,
+.mythcraft .background input,
+.mythcraft .occupation input,
+.mythcraft .profession input {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  .mythcraft .grid-4col {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .mythcraft .grid-5col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .mythcraft .sheet-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .mythcraft .sheet-header .profile-img {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+  
