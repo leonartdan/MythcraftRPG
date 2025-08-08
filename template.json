@@ -131,7 +131,7 @@
     }
   },
   "Item": {
-    "types": ["weapon", "armor", "equipment", "talent", "spell", "skill"],
+    "types": ["weapon", "armor", "equipment", "talent", "spell", "skill", "ancestry", "class", "background"],
     "templates": {
       "base": {
         "description": "",
@@ -275,6 +275,52 @@
       "bonus": 0,
       "proficient": false,
       "tags": []
+    },
+    "ancestry": {
+      "templates": ["base"],
+      "lineageType": "humanoid",
+      "sublineages": [],
+      "traits": [],
+      "abilityScoreIncrease": {
+        "choice": false,
+        "fixed": {},
+        "options": []
+      },
+      "size": "medium",
+      "speed": 20,
+      "languages": [],
+      "proficiencies": []
+    },
+    "class": {
+      "templates": ["base"],
+      "hitDie": "d8",
+      "primaryAttributes": [],
+      "savingThrows": [],
+      "skillProficiencies": {
+        "number": 2,
+        "choices": []
+      },
+      "classFeatures": {},
+      "spellcasting": {
+        "enabled": false,
+        "magicSource": "arcane",
+        "known": [],
+        "slots": {}
+      }
+    },
+    "background": {
+      "templates": ["base"],
+      "skills": [],
+      "languages": [],
+      "equipment": [],
+      "feature": {
+        "name": "",
+        "description": ""
+      },
+      "personalityTraits": [],
+      "ideals": [],
+      "bonds": [],
+      "flaws": []
     }
   }
 }

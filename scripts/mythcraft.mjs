@@ -12,8 +12,9 @@ import { MythCraftActorSheet } from "./sheets/actor-sheet.mjs";
 import { MythCraftItemSheet } from "./sheets/item-sheet.mjs";
 
 // Import helper/utility classes
-import * as chat from "./helpers/chat.mjs";
-import * as dice from "./helpers/dice.mjs";
+import { MYTHCRAFT, configureMythCraft } from "./helpers/config.mjs";
+import { preloadHandlebarsTemplates, registerHandlebarsHelpers } from "./helpers/templates.mjs";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "./helpers/effects.mjs";
 
 /* ------------------------------------ */
 /* Initialize system					*/
@@ -26,12 +27,12 @@ Hooks.once('init', async function() {
     MythCraftActor,
     MythCraftItem,
     rollItemMacro: rollItemMacro,
-    chat,
-    dice
+    onManageActiveEffect,
+    prepareActiveEffectCategories
   };
 
-  // Add custom constants for configuration
-  CONFIG.MYTHCRAFT = {};
+  // Configure MythCraft constants
+  configureMythCraft();
 
   // Define custom Document classes
   CONFIG.Actor.documentClass = MythCraftActor;
@@ -46,12 +47,15 @@ Hooks.once('init', async function() {
   
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("mythcraft", MythCraftItemSheet, { 
-    types: ["weapon", "armor", "equipment", "talent", "spell", "skill"], 
+    types: ["weapon", "armor", "equipment", "talent", "spell", "skill", "ancestry", "class", "background"], 
     makeDefault: true 
   });
 
   // Register system settings
   registerSystemSettings();
+
+  // Register custom Handlebars helpers
+  registerHandlebarsHelpers();
 
   // Preload Handlebars templates
   return preloadHandlebarsTemplates();

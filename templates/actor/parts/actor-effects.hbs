@@ -1,0 +1,117 @@
+{{!-- Actor Effects Partial --}}
+<div class="effects-section">
+  <h3>Active Effects</h3>
+
+  {{!-- Temporary Effects --}}
+  {{#if effects.temporary.effects.length}}
+  <div class="effects-list temporary">
+    <h4>{{localize effects.temporary.label}}</h4>
+    <ol class="effects-list">
+      {{#each effects.temporary.effects as |effect id|}}
+      <li class="effect flexrow" data-effect-id="{{effect.id}}">
+        <div class="effect-image">
+          <img src="{{effect.icon}}" title="{{effect.label}}" width="24" height="24"/>
+        </div>
+        <div class="effect-name">
+          <h4>{{effect.label}}</h4>
+          <p class="effect-source">{{effect._getSourceName}}</p>
+          {{#if effect.duration.remaining}}
+          <p class="effect-duration">{{effect.duration.remaining}} rounds remaining</p>
+          {{/if}}
+        </div>
+        <div class="effect-controls">
+          <a class="effect-control" data-action="edit" title="Edit Effect">
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="effect-control" data-action="delete" title="Delete Effect">
+            <i class="fas fa-trash"></i>
+          </a>
+          <a class="effect-control" data-action="toggle" title="{{#if effect.disabled}}Enable{{else}}Disable{{/if}} Effect">
+            <i class="fas {{#if effect.disabled}}fa-eye-slash{{else}}fa-eye{{/if}}"></i>
+          </a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+  {{/if}}
+
+  {{!-- Passive Effects --}}
+  {{#if effects.passive.effects.length}}
+  <div class="effects-list passive">
+    <h4>{{localize effects.passive.label}}</h4>
+    <ol class="effects-list">
+      {{#each effects.passive.effects as |effect id|}}
+      <li class="effect flexrow" data-effect-id="{{effect.id}}">
+        <div class="effect-image">
+          <img src="{{effect.icon}}" title="{{effect.label}}" width="24" height="24"/>
+        </div>
+        <div class="effect-name">
+          <h4>{{effect.label}}</h4>
+          <p class="effect-source">{{effect._getSourceName}}</p>
+        </div>
+        <div class="effect-controls">
+          <a class="effect-control" data-action="edit" title="Edit Effect">
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="effect-control" data-action="delete" title="Delete Effect">
+            <i class="fas fa-trash"></i>
+          </a>
+          <a class="effect-control" data-action="toggle" title="{{#if effect.disabled}}Enable{{else}}Disable{{/if}} Effect">
+            <i class="fas {{#if effect.disabled}}fa-eye-slash{{else}}fa-eye{{/if}}"></i>
+          </a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+  {{/if}}
+
+  {{!-- Inactive Effects --}}
+  {{#if effects.inactive.effects.length}}
+  <div class="effects-list inactive">
+    <h4>{{localize effects.inactive.label}}</h4>
+    <ol class="effects-list">
+      {{#each effects.inactive.effects as |effect id|}}
+      <li class="effect flexrow disabled" data-effect-id="{{effect.id}}">
+        <div class="effect-image">
+          <img src="{{effect.icon}}" title="{{effect.label}}" width="24" height="24"/>
+        </div>
+        <div class="effect-name">
+          <h4>{{effect.label}}</h4>
+          <p class="effect-source">{{effect._getSourceName}}</p>
+        </div>
+        <div class="effect-controls">
+          <a class="effect-control" data-action="edit" title="Edit Effect">
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="effect-control" data-action="delete" title="Delete Effect">
+            <i class="fas fa-trash"></i>
+          </a>
+          <a class="effect-control" data-action="toggle" title="{{#if effect.disabled}}Enable{{else}}Disable{{/if}} Effect">
+            <i class="fas {{#if effect.disabled}}fa-eye-slash{{else}}fa-eye{{/if}}"></i>
+          </a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+  {{/if}}
+
+  {{!-- Create New Effect Controls --}}
+  <div class="effects-header">
+    <h4>Create New Effect</h4>
+    <div class="effect-create-controls">
+      <a class="effect-control" data-action="create" data-effect-type="temporary" title="Create Temporary Effect">
+        <i class="fas fa-plus"></i> Temporary
+      </a>
+      <a class="effect-control" data-action="create" data-effect-type="passive" title="Create Passive Effect">
+        <i class="fas fa-plus"></i> Passive
+      </a>
+      <a class="effect-control" data-action="create" data-effect-type="inactive" title="Create Inactive Effect">
+        <i class="fas fa-plus"></i> Inactive
+      </a>
+    </div>
+  </div>
+
+</div>

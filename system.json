@@ -46,7 +46,16 @@
       "spell": {
         "htmlFields": ["description"]
       },
-      "skill": {}
+      "skill": {},
+      "ancestry": {
+        "htmlFields": ["description"]
+      },
+      "class": {
+        "htmlFields": ["description"]
+      },
+      "background": {
+        "htmlFields": ["description"]
+      }
     }
   },
   "gridDistance": 5,

@@ -1,3 +1,6 @@
+// Import helpers for active effects
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
+
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -319,71 +322,4 @@ export class MythCraftActorSheet extends ActorSheet {
         return item.roll();
     }
   }
-}
-
-/**
- * Manage Active Effect instances through the Actor Panel via effect control buttons.
- * @param {MouseEvent} event      The left-click event on the effect control
- * @param {Actor|Item} owner      The owning entity which manages this effect
- */
-function onManageActiveEffect(event, owner) {
-  event.preventDefault();
-  const a = event.currentTarget;
-  const li = a.closest("li");
-  const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
-  switch ( a.dataset.action ) {
-    case "create":
-      return owner.createEmbeddedDocuments("ActiveEffect", [{
-        label: "New Effect",
-        icon: "icons/svg/aura.svg",
-        origin: owner.uuid,
-        "duration.rounds": li.dataset.effectType === "temporary" ? 1 : undefined,
-        disabled: li.dataset.effectType === "inactive"
-      }]);
-    case "edit":
-      return effect.sheet.render(true);
-    case "delete":
-      return effect.delete();
-    case "toggle":
-      return effect.update({disabled: !effect.disabled});
-  }
-}
-
-/**
- * Prepare the data structure for Active Effects which are currently applied to an Actor or Item.
- * @param {ActiveEffect[]} effects    The array of Active Effect instances to prepare sheet data for
- * @return {object}                   Data for rendering
- */
-function prepareActiveEffectCategories(effects) {
-  // Define effect header categories
-  const categories = {
-    temporary: {
-      type: "temporary",
-      label: "MYTHCRAFT.Effect.Temporary",
-      effects: []
-    },
-    passive: {
-      type: "passive", 
-      label: "MYTHCRAFT.Effect.Passive",
-      effects: []
-    },
-    inactive: {
-      type: "inactive",
-      label: "MYTHCRAFT.Effect.Inactive", 
-      effects: []
-    }
-  };
-
-  // Iterate over active effects, classifying them into categories
-  for ( let e of effects ) {
-    e._getSourceName = () => {
-      const source = e.sourceName;
-      if ( source ) return source;
-      return game.i18n.localize("MYTHCRAFT.Effect.Unknown");
-    };
-    if ( e.disabled ) categories.inactive.effects.push(e);
-    else if ( e.isTemporary ) categories.temporary.effects.push(e);
-    else categories.passive.effects.push(e);
-  }
-  return categories;
 }
