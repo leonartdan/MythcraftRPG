@@ -1,0 +1,119 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="item-name"><input name="name" type="text" value="{{item.name}}" placeholder="Talent Name"/></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="form-group">
+        <h3>Basic Properties</h3>
+        <div class="grid grid-2col">
+          <div>
+            <label>Talent Type</label>
+            <select name="system.talentType">
+              {{#each talentTypes as |label key|}}
+              <option value="{{key}}" {{selected key system.talentType}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div>
+            <label>Rarity</label>
+            <select name="system.rarity">
+              <option value="common" {{selected "common" system.rarity}}>Common</option>
+              <option value="uncommon" {{selected "uncommon" system.rarity}}>Uncommon</option>
+              <option value="rare" {{selected "rare" system.rarity}}>Rare</option>
+              <option value="very rare" {{selected "very rare" system.rarity}}>Very Rare</option>
+              <option value="legendary" {{selected "legendary" system.rarity}}>Legendary</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Prerequisites --}}
+      <div class="form-group">
+        <h3>Prerequisites</h3>
+        <ol class="prerequisites-list">
+          {{#each system.prerequisites as |prerequisite i|}}
+          <li class="prerequisite flexrow" data-index="{{i}}">
+            <input type="text" name="system.prerequisites.{{i}}" value="{{prerequisite}}" placeholder="Prerequisite requirement"/>
+            <a class="prerequisite-control" data-action="delete" data-index="{{i}}" title="Delete prerequisite">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="prerequisite flexrow">
+            <a class="prerequisite-control" data-action="add" title="Add prerequisite">
+              <i class="fas fa-plus"></i> Add Prerequisite
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      {{!-- Benefits --}}
+      <div class="form-group">
+        <h3>Benefits</h3>
+        <ol class="benefits-list">
+          {{#each system.benefits as |benefit i|}}
+          <li class="benefit flexrow" data-index="{{i}}">
+            <input type="text" name="system.benefits.{{i}}" value="{{benefit}}" placeholder="Talent benefit"/>
+            <a class="benefit-control" data-action="delete" data-index="{{i}}" title="Delete benefit">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="benefit flexrow">
+            <a class="benefit-control" data-action="add" title="Add benefit">
+              <i class="fas fa-plus"></i> Add Benefit
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      {{!-- Tags --}}
+      <div class="form-group">
+        <h3>Tags</h3>
+        <div class="tags-container">
+          {{#each system.tags as |tag|}}
+          <span class="tag">{{tag}}</span>
+          {{/each}}
+        </div>
+        <input type="text" name="system.tags" value="{{join system.tags ','}}" placeholder="combat,magic,skill (comma-separated)"/>
+      </div>
+
+      {{!-- Use Button --}}
+      <div class="form-group">
+        <div class="flexrow">
+          <button type="button" class="rollable" data-roll-type="talent">
+            <i class="fas fa-star"></i> Use Talent
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</form>

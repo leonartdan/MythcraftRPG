@@ -1,0 +1,118 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="item-name"><input name="name" type="text" value="{{item.name}}" placeholder="Equipment Name"/></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="form-group">
+        <div class="grid grid-3col">
+          <div>
+            <label>Quantity</label>
+            <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Weight (lbs)</label>
+            <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Cost</label>
+            <div class="flexrow">
+              <input type="number" name="system.cost.value" value="{{system.cost.value}}" data-dtype="Number"/>
+              <select name="system.cost.denomination">
+                <option value="cp" {{selected "cp" system.cost.denomination}}>CP</option>
+                <option value="sp" {{selected "sp" system.cost.denomination}}>SP</option>
+                <option value="gp" {{selected "gp" system.cost.denomination}}>GP</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Rarity --}}
+      <div class="form-group">
+        <div class="grid grid-2col">
+          <div>
+            <label>Rarity</label>
+            <select name="system.rarity">
+              <option value="common" {{selected "common" system.rarity}}>Common</option>
+              <option value="uncommon" {{selected "uncommon" system.rarity}}>Uncommon</option>
+              <option value="rare" {{selected "rare" system.rarity}}>Rare</option>
+              <option value="very rare" {{selected "very rare" system.rarity}}>Very Rare</option>
+              <option value="legendary" {{selected "legendary" system.rarity}}>Legendary</option>
+              <option value="artifact" {{selected "artifact" system.rarity}}>Artifact</option>
+            </select>
+          </div>
+          <div>
+            <label><input type="checkbox" name="system.identified" {{checked system.identified}}/> Identified</label>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Uses --}}
+      <div class="form-group">
+        <h3>Uses</h3>
+        <div class="grid grid-3col">
+          <div>
+            <label>Current Uses</label>
+            <input type="number" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Maximum Uses</label>
+            <input type="number" name="system.uses.max" value="{{system.uses.max}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Recovery</label>
+            <select name="system.uses.per">
+              <option value="" {{selected "" system.uses.per}}>No Recovery</option>
+              <option value="turn" {{selected "turn" system.uses.per}}>Turn</option>
+              <option value="round" {{selected "round" system.uses.per}}>Round</option>
+              <option value="encounter" {{selected "encounter" system.uses.per}}>Encounter</option>
+              <option value="short" {{selected "short" system.uses.per}}>Short Rest</option>
+              <option value="long" {{selected "long" system.uses.per}}>Long Rest</option>
+              <option value="day" {{selected "day" system.uses.per}}>Day</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Equipment Status --}}
+      <div class="form-group">
+        <div class="grid grid-2col">
+          <div>
+            <label><input type="checkbox" name="system.equipped" {{checked system.equipped}}/> Equipped</label>
+          </div>
+          <div>
+            <label><input type="checkbox" name="system.attuned" {{checked system.attuned}}/> Attuned</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</form>

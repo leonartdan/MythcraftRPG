@@ -5,13 +5,13 @@
   "version": "1.0.0",
   "authors": [
     {
-      "name": "Your Name",
-      "email": "your.email@example.com"
+      "name": "MythCraft Development Team",
+      "discord": "mythcraft-dev"
     }
   ],
   "compatibility": {
     "minimum": "11",
-    "verified": "12",
+    "verified": "13",
     "maximum": "13"
   },
   "esmodules": [
@@ -33,7 +33,7 @@
         "htmlFields": ["biography.value", "background.description", "notes"]
       },
       "npc": {
-        "htmlFields": ["biography.value", "notes"]
+        "htmlFields": ["notes"]
       }
     },
     "Item": {
@@ -51,13 +51,15 @@
   },
   "gridDistance": 5,
   "gridUnits": "ft",
-  "primaryTokenAttribute": "health.value",
-  "secondaryTokenAttribute": "actionPoints.value",
-  "url": "https://github.com/yourusername/mythcraft-foundry",
-  "manifest": "https://github.com/yourusername/mythcraft-foundry/releases/latest/download/system.json",
-  "download": "https://github.com/yourusername/mythcraft-foundry/releases/latest/download/mythcraft.zip",
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "actionPoints",
+  "background": "systems/mythcraft/assets/mythcraft-background.webp",
+  "initiative": "1d20 + @attributes.awareness.value",
+  "url": "https://github.com/leonartdan/MythcraftRPG",
+  "manifest": "https://github.com/leonartdan/MythcraftRPG/releases/latest/download/system.json",
+  "download": "https://github.com/leonartdan/MythcraftRPG/releases/latest/download/mythcraft.zip",
   "license": "LICENSE",
   "readme": "README.md",
-  "bugs": "https://github.com/yourusername/mythcraft-foundry/issues",
+  "bugs": "https://github.com/leonartdan/MythcraftRPG/issues",
   "changelog": "CHANGELOG.md"
 }

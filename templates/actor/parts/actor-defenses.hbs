@@ -1,0 +1,21 @@
+{{!-- Defenses Section --}}
+<div class="defenses">
+  <h3>Defenses</h3>
+  <div class="grid grid-3col">
+    <div class="defense">
+      <label>Physical Defense</label>
+      <span class="defense-value">{{system.defenses.physical.value}}</span>
+      <input type="number" name="system.defenses.physical.bonus" value="{{system.defenses.physical.bonus}}" data-dtype="Number" placeholder="Bonus"/>
+    </div>
+    <div class="defense">
+      <label>Mental Defense</label>
+      <span class="defense-value">{{system.defenses.mental.value}}</span>
+      <input type="number" name="system.defenses.mental.bonus" value="{{system.defenses.mental.bonus}}" data-dtype="Number" placeholder="Bonus"/>
+    </div>
+    <div class="defense">
+      <label>Social Defense</label>
+      <span class="defense-value">{{system.defenses.social.value}}</span>
+      <input type="number" name="system.defenses.social.bonus" value="{{system.defenses.social.bonus}}" data-dtype="Number" placeholder="Bonus"/>
+    </div>
+  </div>
+</div>

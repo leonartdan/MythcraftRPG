@@ -1,0 +1,217 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="item-name"><input name="name" type="text" value="{{item.name}}" placeholder="Spell Name"/></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="form-group">
+        <h3>Basic Properties</h3>
+        <div class="grid grid-3col">
+          <div>
+            <label>Spell Level</label>
+            <input type="number" name="system.level" value="{{system.level}}" data-dtype="Number" min="1" max="9"/>
+          </div>
+          <div>
+            <label>Action Cost</label>
+            <input type="number" name="system.actionCost" value="{{system.actionCost}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Magic Source</label>
+            <select name="system.magicSource">
+              {{#each magicSources as |label key|}}
+              <option value="{{key}}" {{selected key system.magicSource}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {{!-- School and Ability --}}
+      <div class="form-group">
+        <div class="grid grid-2col">
+          <div>
+            <label>School</label>
+            <select name="system.school">
+              <option value="" {{selected "" system.school}}>None</option>
+              {{#each spellSchools as |label key|}}
+              <option value="{{key}}" {{selected key system.school}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div>
+            <label>Spellcasting Ability</label>
+            <select name="system.ability">
+              <option value="" {{selected "" system.ability}}>None</option>
+              {{#each @root.attributes as |label key|}}
+              <option value="{{key}}" {{selected key system.ability}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Components --}}
+      <div class="form-group">
+        <h3>Components</h3>
+        <div class="grid grid-2col">
+          <div>
+            <label><input type="checkbox" name="system.components.verbal" {{checked system.components.verbal}}/> Verbal</label>
+            <label><input type="checkbox" name="system.components.somatic" {{checked system.components.somatic}}/> Somatic</label>
+          </div>
+          <div>
+            <label><input type="checkbox" name="system.components.material" {{checked system.components.material}}/> Material</label>
+            <label><input type="checkbox" name="system.components.focus" {{checked system.components.focus}}/> Focus</label>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Material Components --}}
+      {{#if system.components.material}}
+      <div class="form-group">
+        <h3>Material Components</h3>
+        <div class="grid grid-3col">
+          <div>
+            <label>Materials</label>
+            <input type="text" name="system.materials.value" value="{{system.materials.value}}" placeholder="Material components"/>
+          </div>
+          <div>
+            <label>Cost</label>
+            <input type="number" name="system.materials.cost" value="{{system.materials.cost}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label><input type="checkbox" name="system.materials.consumed" {{checked system.materials.consumed}}/> Consumed</label>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+
+      {{!-- Target and Range --}}
+      <div class="form-group">
+        <h3>Target & Range</h3>
+        <div class="grid grid-2col">
+          <div>
+            <label>Target Type</label>
+            <select name="system.target.type">
+              <option value="" {{selected "" system.target.type}}>None</option>
+              {{#each targetTypes as |label key|}}
+              <option value="{{key}}" {{selected key system.target.type}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div>
+            <label>Target Value</label>
+            <input type="text" name="system.target.value" value="{{system.target.value}}" placeholder="1 creature"/>
+          </div>
+        </div>
+        <div class="grid grid-3col">
+          <div>
+            <label>Range</label>
+            <input type="number" name="system.range.value" value="{{system.range.value}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Long Range</label>
+            <input type="number" name="system.range.long" value="{{system.range.long}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Units</label>
+            <select name="system.range.units">
+              <option value="self" {{selected "self" system.range.units}}>Self</option>
+              <option value="touch" {{selected "touch" system.range.units}}>Touch</option>
+              <option value="ft" {{selected "ft" system.range.units}}>Feet</option>
+              <option value="mi" {{selected "mi" system.range.units}}>Miles</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Damage --}}
+      <div class="form-group">
+        <h3>Damage/Effects</h3>
+        <ol class="damage-parts">
+          {{#each system.damage.parts as |part i|}}
+          <li class="damage-part flexrow" data-index="{{i}}">
+            <input type="text" name="system.damage.parts.{{i}}.0" value="{{part.[0]}}" placeholder="1d6"/>
+            <select name="system.damage.parts.{{i}}.1">
+              {{#each @root.damageTypes as |label key|}}
+              <option value="{{key}}" {{selected key part.[1]}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+            <a class="damage-control" data-action="delete" data-index="{{i}}" title="Delete damage part">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="damage-part flexrow">
+            <a class="damage-control" data-action="add" title="Add damage part">
+              <i class="fas fa-plus"></i> Add Damage Part
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      {{!-- Save --}}
+      <div class="form-group">
+        <h3>Saving Throw</h3>
+        <div class="grid grid-3col">
+          <div>
+            <label>Save Ability</label>
+            <select name="system.save.ability">
+              <option value="" {{selected "" system.save.ability}}>None</option>
+              {{#each @root.attributes as |label key|}}
+              <option value="{{key}}" {{selected key system.save.ability}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div>
+            <label>Save DC</label>
+            <input type="number" name="system.save.dc" value="{{system.save.dc}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Scaling</label>
+            <select name="system.save.scaling">
+              <option value="spell" {{selected "spell" system.save.scaling}}>Spell Level</option>
+              <option value="ability" {{selected "ability" system.save.scaling}}>Ability</option>
+              <option value="flat" {{selected "flat" system.save.scaling}}>Flat DC</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Roll Buttons --}}
+      <div class="form-group">
+        <div class="flexrow">
+          <button type="button" class="rollable" data-roll-type="spell">
+            <i class="fas fa-magic"></i> Cast Spell
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</form>

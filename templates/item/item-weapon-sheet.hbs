@@ -1,0 +1,179 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="item-name"><input name="name" type="text" value="{{item.name}}" placeholder="Weapon Name"/></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="form-group">
+        <div class="grid grid-3col">
+          <div>
+            <label>Quantity</label>
+            <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Weight (lbs)</label>
+            <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Cost</label>
+            <div class="flexrow">
+              <input type="number" name="system.cost.value" value="{{system.cost.value}}" data-dtype="Number"/>
+              <select name="system.cost.denomination">
+                <option value="cp" {{selected "cp" system.cost.denomination}}>CP</option>
+                <option value="sp" {{selected "sp" system.cost.denomination}}>SP</option>
+                <option value="gp" {{selected "gp" system.cost.denomination}}>GP</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Weapon Specific --}}
+      <div class="form-group">
+        <h3>Weapon Properties</h3>
+        <div class="grid grid-2col">
+          <div>
+            <label>Weapon Type</label>
+            <select name="system.weaponType">
+              {{#each weaponTypes as |label key|}}
+              <option value="{{key}}" {{selected key system.weaponType}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div>
+            <label>Action Cost</label>
+            <input type="number" name="system.actionCost" value="{{system.actionCost}}" data-dtype="Number"/>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Attack Attributes --}}
+      <div class="form-group">
+        <h3>Attack Attributes</h3>
+        <div class="grid grid-2col">
+          <div>
+            <label>Attack Attribute</label>
+            <select name="system.attributes.attack">
+              {{#each attributes as |label key|}}
+              <option value="{{key}}" {{selected key system.attributes.attack}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div>
+            <label>Damage Attribute</label>
+            <select name="system.attributes.damage">
+              {{#each attributes as |label key|}}
+              <option value="{{key}}" {{selected key system.attributes.damage}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Damage --}}
+      <div class="form-group">
+        <h3>Damage</h3>
+        <ol class="damage-parts">
+          {{#each system.damage.parts as |part i|}}
+          <li class="damage-part flexrow" data-index="{{i}}">
+            <input type="text" name="system.damage.parts.{{i}}.0" value="{{part.[0]}}" placeholder="1d6"/>
+            <select name="system.damage.parts.{{i}}.1">
+              {{#each @root.damageTypes as |label key|}}
+              <option value="{{key}}" {{selected key part.[1]}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+            <a class="damage-control" data-action="delete" data-index="{{i}}" title="Delete damage part">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="damage-part flexrow">
+            <a class="damage-control" data-action="add" title="Add damage part">
+              <i class="fas fa-plus"></i> Add Damage Part
+            </a>
+          </li>
+        </ol>
+        
+        {{#if system.damage.versatile}}
+        <div>
+          <label>Versatile Damage</label>
+          <input type="text" name="system.damage.versatile" value="{{system.damage.versatile}}" placeholder="1d8"/>
+        </div>
+        {{/if}}
+      </div>
+
+      {{!-- Range --}}
+      <div class="form-group">
+        <h3>Range</h3>
+        <div class="grid grid-3col">
+          <div>
+            <label>Normal Range</label>
+            <input type="number" name="system.range.value" value="{{system.range.value}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Long Range</label>
+            <input type="number" name="system.range.long" value="{{system.range.long}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Units</label>
+            <select name="system.range.units">
+              <option value="ft" {{selected "ft" system.range.units}}>Feet</option>
+              <option value="m" {{selected "m" system.range.units}}>Meters</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Equipment Status --}}
+      <div class="form-group">
+        <div class="grid grid-2col">
+          <div>
+            <label><input type="checkbox" name="system.equipped" {{checked system.equipped}}/> Equipped</label>
+          </div>
+          <div>
+            <label><input type="checkbox" name="system.proficient" {{checked system.proficient}}/> Proficient</label>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Roll Buttons --}}
+      <div class="form-group">
+        <div class="flexrow">
+          <button type="button" class="rollable" data-roll-type="attack">
+            <i class="fas fa-sword"></i> Attack Roll
+          </button>
+          <button type="button" class="rollable" data-roll-type="damage">
+            <i class="fas fa-tint"></i> Damage Roll
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</form>

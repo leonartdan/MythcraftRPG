@@ -1,0 +1,95 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="item-name"><input name="name" type="text" value="{{item.name}}" placeholder="Skill Name"/></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="form-group">
+        <h3>Skill Properties</h3>
+        <div class="grid grid-2col">
+          <div>
+            <label>Key Ability</label>
+            <select name="system.ability">
+              {{#each @root.attributes as |label key|}}
+              <option value="{{key}}" {{selected key system.ability}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div>
+            <label><input type="checkbox" name="system.proficient" {{checked system.proficient}}/> Proficient</label>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Skill Modifiers --}}
+      <div class="form-group">
+        <h3>Modifiers</h3>
+        <div class="grid grid-2col">
+          <div>
+            <label>Ranks</label>
+            <input type="number" name="system.ranks" value="{{system.ranks}}" data-dtype="Number" min="0"/>
+          </div>
+          <div>
+            <label>Bonus</label>
+            <input type="number" name="system.bonus" value="{{system.bonus}}" data-dtype="Number"/>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Tags --}}
+      <div class="form-group">
+        <h3>Tags</h3>
+        <div class="tags-container">
+          {{#each system.tags as |tag|}}
+          <span class="tag">{{tag}}</span>
+          {{/each}}
+        </div>
+        <input type="text" name="system.tags" value="{{join system.tags ','}}" placeholder="social,knowledge,physical (comma-separated)"/>
+      </div>
+
+      {{!-- Total Modifier Display --}}
+      <div class="form-group">
+        <h3>Total Modifier</h3>
+        <div class="total-modifier">
+          <strong>{{#if actor}}{{actor.system.attributes.[system.ability].value}}{{else}}0{{/if}} (ability) + {{system.ranks}} (ranks) + {{system.bonus}} (bonus) = {{#if actor}}{{add (add actor.system.attributes.[system.ability].value system.ranks) system.bonus}}{{else}}{{add system.ranks system.bonus}}{{/if}}</strong>
+        </div>
+      </div>
+
+      {{!-- Roll Button --}}
+      <div class="form-group">
+        <div class="flexrow">
+          <button type="button" class="rollable" data-roll-type="skill">
+            <i class="fas fa-dice-d20"></i> Roll Skill Check
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</form>

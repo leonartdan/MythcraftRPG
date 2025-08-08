@@ -1,0 +1,53 @@
+{{!-- Weapon Details Section --}}
+<div class="weapon-details">
+  <div class="form-group">
+    <h3>Weapon Properties</h3>
+    <div class="grid grid-2col">
+      <div>
+        <label>Weapon Type</label>
+        <select name="system.weaponType">
+          <option value="melee" {{selected "melee" system.weaponType}}>Melee</option>
+          <option value="ranged" {{selected "ranged" system.weaponType}}>Ranged</option>
+          <option value="thrown" {{selected "thrown" system.weaponType}}>Thrown</option>
+        </select>
+      </div>
+      <div>
+        <label>Action Cost</label>
+        <input type="number" name="system.actionCost" value="{{system.actionCost}}" data-dtype="Number"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <h3>Attack Attributes</h3>
+    <div class="grid grid-2col">
+      <div>
+        <label>Attack Attribute</label>
+        <select name="system.attributes.attack">
+          <option value="strength" {{selected "strength" system.attributes.attack}}>Strength</option>
+          <option value="dexterity" {{selected "dexterity" system.attributes.attack}}>Dexterity</option>
+          <option value="coordination" {{selected "coordination" system.attributes.attack}}>Coordination</option>
+        </select>
+      </div>
+      <div>
+        <label>Damage Attribute</label>
+        <select name="system.attributes.damage">
+          <option value="strength" {{selected "strength" system.attributes.damage}}>Strength</option>
+          <option value="dexterity" {{selected "dexterity" system.attributes.damage}}>Dexterity</option>
+          <option value="coordination" {{selected "coordination" system.attributes.damage}}>Coordination</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="grid grid-2col">
+      <div>
+        <label><input type="checkbox" name="system.proficient" {{checked system.proficient}}/> Proficient</label>
+      </div>
+      <div>
+        <label><input type="checkbox" name="system.equipped" {{checked system.equipped}}/> Equipped</label>
+      </div>
+    </div>
+  </div>
+</div>
