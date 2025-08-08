@@ -99,7 +99,7 @@
         <div class="resource initiative">
           <label class="resource-label">Initiative</label>
           <div class="resource-content">
-            <button type="button" class="initiative-roll rollable" data-roll="1d20 + @awareness.value">
+            <button type="button" class="initiative-roll rollable">
               Roll Initiative
             </button>
           </div>
@@ -112,10 +112,10 @@
         <div class="grid grid-4col">
           {{#each system.attributes as |attribute key|}}
           <div class="attribute flexrow flex-group-center">
-            <label for="system.attributes.{{key}}.value" class="resource-label">{{capitalize key}}</label>
+            <label for="system.attributes.{{key}}.value" class="resource-label">{{titleCase key}}</label>
             <input type="number" name="system.attributes.{{key}}.value" value="{{attribute.value}}" data-dtype="Number"/>
             <span class="attribute-mod">{{numberFormat attribute.mod decimals=0 sign=true}}</span>
-            <a class="attribute-roll rollable" data-attribute="{{key}}" title="Roll {{capitalize key}}">
+            <a class="attribute-roll rollable" data-attribute="{{key}}" title="Roll {{titleCase key}}">
               <i class="fas fa-dice-d20"></i>
             </a>
           </div>
@@ -303,7 +303,7 @@
       {{#each spells as |spellList source|}}
         {{#if spellList.length}}
         <div class="spell-list">
-          <h4>{{capitalize source}} Spells</h4>
+          <h4>{{titleCase source}} Spells</h4>
           <ol class="items-list">
             {{#each spellList as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">

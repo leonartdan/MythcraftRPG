@@ -69,14 +69,14 @@
           <span class="tag">{{tag}}</span>
           {{/each}}
         </div>
-        <input type="text" name="system.tags" value="{{join system.tags ','}}" placeholder="social,knowledge,physical (comma-separated)"/>
+        <input type="text" name="system.tags" value="{{system.tags}}" placeholder="social,knowledge,physical (comma-separated)"/>
       </div>
 
       {{!-- Total Modifier Display --}}
       <div class="form-group">
         <h3>Total Modifier</h3>
         <div class="total-modifier">
-          <strong>{{#if actor}}{{actor.system.attributes.[system.ability].value}}{{else}}0{{/if}} (ability) + {{system.ranks}} (ranks) + {{system.bonus}} (bonus) = {{#if actor}}{{add (add actor.system.attributes.[system.ability].value system.ranks) system.bonus}}{{else}}{{add system.ranks system.bonus}}{{/if}}</strong>
+          <strong>Ability + Ranks + Bonus = Total Modifier</strong>
         </div>
       </div>
 

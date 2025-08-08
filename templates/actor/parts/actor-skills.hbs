@@ -17,7 +17,7 @@
         Ranks: {{item.system.ranks}}
       </div>
       <div class="item-controls">
-        Total: +{{add (add actor.system.attributes.[item.system.ability].value item.system.ranks) item.system.bonus}}
+        Total: +{{item.system.totalModifier}}
       </div>
       <div class="item-controls">
         <a class="item-control item-roll" data-roll-type="skill" title="Roll skill"><i class="fas fa-dice-d20"></i></a>

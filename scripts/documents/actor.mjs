@@ -206,246 +206,25 @@ export class MythCraftActor extends Actor {
    * @returns {Promise<Actor>} This actor after the update
    */
   async rest(short = true) {
-    const updateData = {};
+    const updates = {};
     const system = this.system;
 
     if (short) {
-      // Short rest: restore action points up to max, carry over excess
-      const maxAP = system.actionPoints.max;
-      const carryLimit = system.actionPoints.carryLimit || 1;
-      const currentCarried = system.actionPoints.carried || 0;
-      
-      let newAP = maxAP;
-      let newCarried = currentCarried;
-      
-      // Apply action point carryover rules if enabled
-      if (game.settings.get("mythcraft", "actionPointCarryover")) {
-        const excess = Math.max(0, system.actionPoints.value - maxAP);
-        newCarried = Math.min(carryLimit, currentCarried + excess);
-      }
-      
-      updateData["system.actionPoints.value"] = newAP;
-      updateData["system.actionPoints.carried"] = newCarried;
-      
-      ui.notifications.info("Short rest completed. Action Points restored.");
+      // Short rest - recover action points
+      updates["system.actionPoints.value"] = system.actionPoints.max;
     } else {
-      // Long rest: restore all resources
-      updateData["system.health.value"] = system.health.max;
-      updateData["system.actionPoints.value"] = system.actionPoints.max;
-      updateData["system.actionPoints.carried"] = 0;
-      
-      ui.notifications.info("Long rest completed. All resources restored.");
-    }
-
-    return await this.update(updateData);
-  }
-}
-    const systemData = actorData.system;
-
-    // Calculate attribute modifiers for NPCs
-    for (let [key, attribute] of Object.entries(systemData.attributes)) {
-      attribute.mod = attribute.value;
-    }
-  }
-
-  /**
-   * @override
-   * Augment the basic actor data with additional dynamic data. Typically,
-   * you'll want to handle most of your calculated/derived data in this step.
-   * Data calculated in this step should generally not exist in template.json
-   * (such as ability modifiers rather than ability scores) and should be
-   * available both inside and outside of character sheets (such as if an actor
-   * is queried and has a roll executed directly from it).
-   */
-  prepareDerivedData() {
-    const actorData = this;
-    const systemData = actorData.system;
-    const flags = actorData.flags.mythcraft || {};
-
-    // Make separate methods for each Actor type (character, npc, etc.) to keep
-    // things organized.
-    this._prepareCharacterData(actorData);
-    this._prepareNpcData(actorData);
-
-    // Calculate Action Point limits
-    this._calculateActionPoints(systemData);
-    
-    // Calculate defenses
-    this._calculateDefenses(systemData);
-    
-    // Calculate health
-    this._calculateHealth(systemData);
-  }
-
-  /**
-   * Calculate Action Points based on level and attributes
-   */
-  _calculateActionPoints(systemData) {
-    const base = 3;
-    const coordBonus = Math.floor(systemData.attributes.coordination.value / 2);
-    systemData.actionPoints.max = base + coordBonus;
-    
-    // Calculate carry limit based on level
-    const level = systemData.level.value;
-    systemData.actionPoints.carryLimit = Math.floor(level / 2) + 1;
-  }
-
-  /**
-   * Calculate defenses based on attributes and equipment
-   */
-  _calculateDefenses(systemData) {
-    // Physical Defense = 10 + DEX + armor bonuses
-    systemData.defenses.physical.value = 10 + systemData.attributes.dexterity.value + systemData.defenses.physical.bonus;
-    
-    // Mental Defense = 10 + AWR + bonuses
-    systemData.defenses.mental.value = 10 + systemData.attributes.awareness.value + systemData.defenses.mental.bonus;
-    
-    // Social Defense = 10 + PRE + bonuses  
-    systemData.defenses.social.value = 10 + systemData.attributes.presence.value + systemData.defenses.social.bonus;
-  }
-
-  /**
-   * Calculate health based on level and endurance
-   */
-  _calculateHealth(systemData) {
-    const level = systemData.level.value;
-    const endMod = systemData.attributes.endurance.value;
-    const baseHp = 20 + (level * 5) + (endMod * level);
-    
-    if (systemData.health.max !== baseHp) {
-      systemData.health.max = baseHp;
-      if (systemData.health.value > baseHp) {
-        systemData.health.value = baseHp;
-      }
-    }
-  }
-
-  /**
-   * Override getRollData() that's supplied to rolls.
-   */
-  getRollData() {
-    const data = super.getRollData();
-
-    // Prepare character roll data.
-    this._getCharacterRollData(data);
-    this._getNpcRollData(data);
-
-    return data;
-  }
-
-  /**
-   * Prepare character roll data.
-   */
-  _getCharacterRollData(data) {
-    if (this.type !== 'character') return;
-
-    // Copy the ability scores to the top level, so that rolls can use
-    // formulas like `@str.mod + 4`.
-    if (data.attributes) {
-      for (let [k, v] of Object.entries(data.attributes)) {
-        data[k] = foundry.utils.deepClone(v);
-      }
-    }
-
-    // Add level for easier access, or fall back to 0.
-    if (data.level) {
-      data.lvl = data.level.value ?? 0;
-    }
-  }
-
-  /**
-   * Prepare NPC roll data.
-   */
-  _getNpcRollData(data) {
-    if (this.type !== 'npc') return;
-
-    // Process additional NPC data here.
-  }
-
-  /**
-   * Roll an attribute check
-   * @param {string} attributeId    The attribute key (e.g. "strength")
-   * @param {object} options        Options which configure how the roll is processed
-   */
-  async rollAttribute(attributeId, options = {}) {
-    const attribute = this.system.attributes[attributeId];
-    if (!attribute) return;
-
-    const rollData = this.getRollData();
-    const formula = `1d20 + @${attributeId}.value`;
-    
-    const roll = new Roll(formula, rollData);
-    
-    const label = `${CONFIG.MYTHCRAFT?.attributes?.[attributeId] ?? attributeId.capitalize()} Check`;
-    
-    return roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: label,
-      rollMode: game.settings.get('core', 'rollMode'),
-    });
-  }
-
-  /**
-   * Roll initiative for this actor
-   */
-  async rollInitiative(options = {}) {
-    const rollData = this.getRollData();
-    const formula = "1d20 + @awareness.value";
-    
-    const roll = new Roll(formula, rollData);
-    
-    return roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: "Initiative",
-      rollMode: game.settings.get('core', 'rollMode'),
-    });
-  }
-
-  /**
-   * Spend Action Points
-   * @param {number} cost   Number of AP to spend
-   * @returns {boolean}     Whether the cost could be paid
-   */
-  async spendActionPoints(cost) {
-    const current = this.system.actionPoints.value;
-    if (current < cost) {
-      ui.notifications.warn(`Not enough Action Points! Need ${cost}, have ${current}`);
-      return false;
-    }
-    
-    await this.update({
-      "system.actionPoints.value": current - cost
-    });
-    
-    return true;
-  }
-
-  /**
-   * Rest and reset Action Points
-   * @param {boolean} shortRest   Whether this is a short rest (default: true)
-   */
-  async rest(shortRest = true) {
-    const updates = {};
-    
-    if (shortRest) {
-      // Short rest: restore AP to max
-      updates["system.actionPoints.value"] = this.system.actionPoints.max;
-    } else {
-      // Long rest: restore AP and some HP
-      updates["system.actionPoints.value"] = this.system.actionPoints.max;
+      // Long rest - recover all resources
+      updates["system.health.value"] = system.health.max;
+      updates["system.actionPoints.value"] = system.actionPoints.max;
       updates["system.actionPoints.carried"] = 0;
-      
-      const healAmount = Math.floor(this.system.health.max * 0.5);
-      const newHp = Math.min(this.system.health.max, this.system.health.value + healAmount);
-      updates["system.health.value"] = newHp;
     }
-    
+
     await this.update(updates);
     
     ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      content: `${this.name} takes a ${shortRest ? 'short' : 'long'} rest.`
+      content: `${this.name} takes a ${short ? 'short' : 'long'} rest.`
     });
   }
 }
