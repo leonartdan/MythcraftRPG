@@ -1,0 +1,160 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Ancestry Name"/></h1>
+      <div class="item-subtitle">{{capitalize system.lineageType}} Ancestry</div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+    <a class="item" data-tab="traits">Traits</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="grid grid-3col">
+        <div class="form-group">
+          <label>Lineage Type</label>
+          <select name="system.lineageType">
+            {{#select system.lineageType}}
+            <option value="humanoid">Humanoid</option>
+            <option value="construct">Construct</option>
+            <option value="elemental">Elemental</option>
+            <option value="fey">Fey</option>
+            <option value="fiend">Fiend</option>
+            <option value="celestial">Celestial</option>
+            <option value="undead">Undead</option>
+            <option value="aberration">Aberration</option>
+            {{/select}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Size</label>
+          <select name="system.size">
+            {{#select system.size}}
+            <option value="tiny">Tiny</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            {{/select}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Speed (feet)</label>
+          <input type="number" name="system.speed" value="{{system.speed}}" data-dtype="Number"/>
+        </div>
+      </div>
+
+      {{!-- Ability Score Increases --}}
+      <div class="form-group">
+        <label>Ability Score Increases</label>
+        <div class="ability-increases">
+          <div class="form-group">
+            <label class="checkbox">
+              <input type="checkbox" name="system.abilityScoreIncrease.choice" {{checked system.abilityScoreIncrease.choice}}/>
+              Player Choice (+2 to one ability, +1 to another)
+            </label>
+          </div>
+          
+          {{#unless system.abilityScoreIncrease.choice}}
+          <div class="fixed-increases">
+            <h4>Fixed Increases</h4>
+            <div class="grid grid-4col">
+              {{#each config.attributes as |label key|}}
+              <div>
+                <label>{{label}}</label>
+                <input type="number" name="system.abilityScoreIncrease.fixed.{{key}}" value="{{lookup ../system.abilityScoreIncrease.fixed key}}" data-dtype="Number" min="0" max="2"/>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+          {{/unless}}
+        </div>
+      </div>
+
+      {{!-- Languages --}}
+      <div class="form-group">
+        <label>Languages</label>
+        <input type="text" name="system.languages" value="{{join system.languages ','}}" placeholder="Common, Elvish, etc."/>
+        <p class="notes">Separate multiple languages with commas.</p>
+      </div>
+
+      {{!-- Proficiencies --}}
+      <div class="form-group">
+        <label>Proficiencies</label>
+        <textarea name="system.proficiencies" rows="3" placeholder="List weapon, armor, tool, or skill proficiencies">{{join system.proficiencies '\n'}}</textarea>
+      </div>
+
+      {{!-- Sublineages --}}
+      <div class="form-group">
+        <label>Sublineages</label>
+        <ol class="sublineages-list">
+          {{#each system.sublineages as |sublineage index|}}
+          <li class="sublineage flexrow">
+            <input type="text" name="system.sublineages.{{index}}" value="{{sublineage}}" placeholder="Sublineage name"/>
+            <a class="control" data-action="delete-sublineage" data-index="{{index}}" title="Delete Sublineage">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="sublineage">
+            <a class="control" data-action="add-sublineage" title="Add Sublineage">
+              <i class="fas fa-plus"></i> Add Sublineage
+            </a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+
+    {{!-- Traits Tab --}}
+    <div class="tab traits" data-group="primary" data-tab="traits">
+      
+      {{!-- Ancestry Traits --}}
+      <div class="form-group">
+        <label>Ancestry Traits</label>
+        <ol class="traits-list">
+          {{#each system.traits as |trait index|}}
+          <li class="trait">
+            <div class="trait-header flexrow">
+              <input type="text" name="system.traits.{{index}}.name" value="{{trait.name}}" placeholder="Trait name"/>
+              <a class="control" data-action="delete-trait" data-index="{{index}}" title="Delete Trait">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+            <div class="trait-description">
+              <textarea name="system.traits.{{index}}.description" rows="3" placeholder="Trait description">{{trait.description}}</textarea>
+            </div>
+          </li>
+          {{/each}}
+          <li class="trait">
+            <a class="control" data-action="add-trait" title="Add Trait">
+              <i class="fas fa-plus"></i> Add Trait
+            </a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+
+  </section>
+</form>

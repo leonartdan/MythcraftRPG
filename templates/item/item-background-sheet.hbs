@@ -1,0 +1,152 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Background Name"/></h1>
+      <div class="item-subtitle">Character Background</div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+    <a class="item" data-tab="personality">Personality</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Skill Proficiencies --}}
+      <div class="form-group">
+        <label>Skill Proficiencies</label>
+        <input type="text" name="system.skills" value="{{join system.skills ','}}" placeholder="e.g., Insight, Persuasion"/>
+        <p class="notes">Separate multiple skills with commas.</p>
+      </div>
+
+      {{!-- Languages --}}
+      <div class="form-group">
+        <label>Languages</label>
+        <input type="text" name="system.languages" value="{{join system.languages ','}}" placeholder="e.g., Draconic, Thieves' Cant"/>
+        <p class="notes">Separate multiple languages with commas.</p>
+      </div>
+
+      {{!-- Equipment --}}
+      <div class="form-group">
+        <label>Equipment</label>
+        <textarea name="system.equipment" rows="4" placeholder="List starting equipment from this background">{{join system.equipment '\n'}}</textarea>
+      </div>
+
+      {{!-- Background Feature --}}
+      <div class="form-group">
+        <label>Feature Name</label>
+        <input type="text" name="system.feature.name" value="{{system.feature.name}}" placeholder="Background feature name"/>
+      </div>
+
+      <div class="form-group">
+        <label>Feature Description</label>
+        {{editor system.feature.description target="system.feature.description" button=true owner=owner editable=editable}}
+      </div>
+
+    </div>
+
+    {{!-- Personality Tab --}}
+    <div class="tab personality" data-group="primary" data-tab="personality">
+      
+      {{!-- Personality Traits --}}
+      <div class="form-group">
+        <label>Personality Traits</label>
+        <ol class="personality-list">
+          {{#each system.personalityTraits as |trait index|}}
+          <li class="personality-item flexrow">
+            <input type="text" name="system.personalityTraits.{{index}}" value="{{trait}}" placeholder="Personality trait"/>
+            <a class="control" data-action="delete-personality" data-index="{{index}}" title="Delete Trait">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="personality-item">
+            <a class="control" data-action="add-personality" title="Add Personality Trait">
+              <i class="fas fa-plus"></i> Add Personality Trait
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      {{!-- Ideals --}}
+      <div class="form-group">
+        <label>Ideals</label>
+        <ol class="ideals-list">
+          {{#each system.ideals as |ideal index|}}
+          <li class="ideal-item flexrow">
+            <input type="text" name="system.ideals.{{index}}" value="{{ideal}}" placeholder="Ideal"/>
+            <a class="control" data-action="delete-ideal" data-index="{{index}}" title="Delete Ideal">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="ideal-item">
+            <a class="control" data-action="add-ideal" title="Add Ideal">
+              <i class="fas fa-plus"></i> Add Ideal
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      {{!-- Bonds --}}
+      <div class="form-group">
+        <label>Bonds</label>
+        <ol class="bonds-list">
+          {{#each system.bonds as |bond index|}}
+          <li class="bond-item flexrow">
+            <input type="text" name="system.bonds.{{index}}" value="{{bond}}" placeholder="Bond"/>
+            <a class="control" data-action="delete-bond" data-index="{{index}}" title="Delete Bond">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="bond-item">
+            <a class="control" data-action="add-bond" title="Add Bond">
+              <i class="fas fa-plus"></i> Add Bond
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      {{!-- Flaws --}}
+      <div class="form-group">
+        <label>Flaws</label>
+        <ol class="flaws-list">
+          {{#each system.flaws as |flaw index|}}
+          <li class="flaw-item flexrow">
+            <input type="text" name="system.flaws.{{index}}" value="{{flaw}}" placeholder="Flaw"/>
+            <a class="control" data-action="delete-flaw" data-index="{{index}}" title="Delete Flaw">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="flaw-item">
+            <a class="control" data-action="add-flaw" title="Add Flaw">
+              <i class="fas fa-plus"></i> Add Flaw
+            </a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+
+  </section>
+</form>

@@ -1,0 +1,106 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Skill Name"/></h1>
+      <div class="item-subtitle">{{localize item.type}} - {{capitalize system.ability}}</div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Ability and Proficiency --}}
+      <div class="grid grid-2col">
+        <div class="form-group">
+          <label>Key Ability</label>
+          <select name="system.ability">
+            {{#select system.ability}}
+            <option value="strength">Strength</option>
+            <option value="dexterity">Dexterity</option>
+            <option value="endurance">Endurance</option>
+            <option value="intelligence">Intelligence</option>
+            <option value="awareness">Awareness</option>
+            <option value="coordination">Coordination</option>
+            <option value="willpower">Willpower</option>
+            <option value="presence">Presence</option>
+            {{/select}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="checkbox">
+            <input type="checkbox" name="system.proficient" {{checked system.proficient}}/>
+            Proficient
+          </label>
+        </div>
+      </div>
+
+      {{!-- Skill Points --}}
+      <div class="grid grid-2col">
+        <div class="form-group">
+          <label>Ranks</label>
+          <input type="number" name="system.ranks" value="{{system.ranks}}" data-dtype="Number" min="0"/>
+        </div>
+        <div class="form-group">
+          <label>Bonus</label>
+          <input type="number" name="system.bonus" value="{{system.bonus}}" data-dtype="Number"/>
+        </div>
+      </div>
+
+      {{!-- Total Modifier Display --}}
+      <div class="form-group">
+        <label>Total Modifier</label>
+        <div class="skill-total">
+          {{#if owner}}
+          {{add owner.system.attributes.[system.ability].value system.ranks system.bonus (if system.proficient 2 0)}}
+          {{else}}
+          {{add system.ranks system.bonus (if system.proficient 2 0)}}
+          {{/if}}
+        </div>
+      </div>
+
+      {{!-- Skill Tags --}}
+      <div class="form-group">
+        <label>Tags</label>
+        <input type="text" name="system.tags" value="{{join system.tags ','}}" placeholder="Comma-separated tags"/>
+        <p class="notes">Separate multiple tags with commas (e.g., knowledge, social, physical).</p>
+      </div>
+
+      {{!-- Special Uses --}}
+      <div class="form-group">
+        <label>Special Uses</label>
+        <textarea name="system.specialUses" rows="3" placeholder="Describe any special uses or applications for this skill">{{system.specialUses}}</textarea>
+      </div>
+
+      {{!-- Skill Check Button --}}
+      <div class="form-group">
+        <div class="form-fields">
+          <button type="button" class="rollable" data-roll-type="skill" data-skill="{{@key}}">
+            <i class="fas fa-dice-d20"></i> Roll {{item.name}} Check
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</form>

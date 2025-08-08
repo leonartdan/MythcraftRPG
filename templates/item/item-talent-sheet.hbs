@@ -1,0 +1,133 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Talent Name"/></h1>
+      <div class="item-subtitle">{{capitalize system.talentType}} Talent</div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Talent Type --}}
+      <div class="form-group">
+        <label>Talent Type</label>
+        <select name="system.talentType">
+          {{#select system.talentType}}
+          <option value="general">General</option>
+          <option value="combat">Combat</option>
+          <option value="magic">Magic</option>
+          <option value="skill">Skill</option>
+          <option value="lineage">Lineage</option>
+          <option value="background">Background</option>
+          {{/select}}
+        </select>
+      </div>
+
+      {{!-- Prerequisites --}}
+      <div class="form-group">
+        <label>Prerequisites</label>
+        <ol class="prerequisites-list">
+          {{#each system.prerequisites as |prerequisite index|}}
+          <li class="prerequisite flexrow">
+            <input type="text" name="system.prerequisites.{{index}}" value="{{prerequisite}}" placeholder="Prerequisite description"/>
+            <a class="prerequisite-control" data-action="delete" data-index="{{index}}" title="Delete Prerequisite">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="prerequisite">
+            <a class="prerequisite-control" data-action="add" title="Add Prerequisite">
+              <i class="fas fa-plus"></i> Add Prerequisite
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      {{!-- Benefits --}}
+      <div class="form-group">
+        <label>Benefits</label>
+        <ol class="benefits-list">
+          {{#each system.benefits as |benefit index|}}
+          <li class="benefit flexrow">
+            <input type="text" name="system.benefits.{{index}}" value="{{benefit}}" placeholder="Benefit description"/>
+            <a class="benefit-control" data-action="delete" data-index="{{index}}" title="Delete Benefit">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="benefit">
+            <a class="benefit-control" data-action="add" title="Add Benefit">
+              <i class="fas fa-plus"></i> Add Benefit
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      {{!-- Tags --}}
+      <div class="form-group">
+        <label>Tags</label>
+        <input type="text" name="system.tags" value="{{join system.tags ','}}" placeholder="Comma-separated tags"/>
+        <p class="notes">Separate multiple tags with commas.</p>
+      </div>
+
+      {{!-- Rarity --}}
+      <div class="form-group">
+        <label>Rarity</label>
+        <select name="system.rarity">
+          {{#select system.rarity}}
+          <option value="common">Common</option>
+          <option value="uncommon">Uncommon</option>
+          <option value="rare">Rare</option>
+          <option value="very-rare">Very Rare</option>
+          <option value="legendary">Legendary</option>
+          {{/select}}
+        </select>
+      </div>
+
+      {{!-- Source --}}
+      <div class="form-group">
+        <label>Source</label>
+        <input type="text" name="system.source" value="{{system.source}}" placeholder="e.g., Player's Handbook"/>
+      </div>
+
+      {{!-- Action Formula --}}
+      <div class="form-group">
+        <label>Action Formula</label>
+        <input type="text" name="system.formula" value="{{system.formula}}" placeholder="1d20 + @strength.mod"/>
+        <p class="notes">Formula to roll when this talent is activated. Leave blank if no roll is needed.</p>
+      </div>
+
+      {{!-- Action Button --}}
+      <div class="form-group">
+        <div class="form-fields">
+          <button type="button" class="rollable" data-roll-type="talent">
+            <i class="fas fa-magic"></i> Use {{item.name}}
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</form>

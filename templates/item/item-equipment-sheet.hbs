@@ -1,0 +1,149 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Equipment Name"/></h1>
+      <div class="item-subtitle">{{localize item.type}}</div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="grid grid-3col">
+        <div class="form-group">
+          <label>Weight (lbs)</label>
+          <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number" step="0.1"/>
+        </div>
+        <div class="form-group">
+          <label>Cost</label>
+          <div class="flexrow">
+            <input type="number" name="system.cost.value" value="{{system.cost.value}}" data-dtype="Number"/>
+            <select name="system.cost.denomination">
+              {{#select system.cost.denomination}}
+              <option value="cp">CP</option>
+              <option value="sp">SP</option>
+              <option value="gp">GP</option>
+              <option value="pp">PP</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Rarity</label>
+          <select name="system.rarity">
+            {{#select system.rarity}}
+            <option value="common">Common</option>
+            <option value="uncommon">Uncommon</option>
+            <option value="rare">Rare</option>
+            <option value="very-rare">Very Rare</option>
+            <option value="legendary">Legendary</option>
+            <option value="artifact">Artifact</option>
+            {{/select}}
+          </select>
+        </div>
+      </div>
+
+      {{!-- Quantity --}}
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number" min="0"/>
+      </div>
+
+      {{!-- Equipment Status --}}
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="system.equipped" {{checked system.equipped}}/>
+          Equipped/Carried
+        </label>
+      </div>
+
+      {{!-- Magical Properties --}}
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="system.attuned" {{checked system.attuned}}/>
+          Requires Attunement
+        </label>
+      </div>
+
+      {{!-- Identification --}}
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="system.identified" {{checked system.identified}}/>
+          Identified
+        </label>
+      </div>
+
+      {{!-- Uses --}}
+      <div class="form-group">
+        <label>Uses</label>
+        <div class="grid grid-4col">
+          <div>
+            <label>Current</label>
+            <input type="number" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number" min="0"/>
+          </div>
+          <div>
+            <label>Maximum</label>
+            <input type="number" name="system.uses.max" value="{{system.uses.max}}" data-dtype="Number" min="0"/>
+          </div>
+          <div>
+            <label>Per</label>
+            <select name="system.uses.per">
+              <option value="">—</option>
+              {{#select system.uses.per}}
+              <option value="day">Day</option>
+              <option value="short">Short Rest</option>
+              <option value="long">Long Rest</option>
+              <option value="charges">Charges</option>
+              {{/select}}
+            </select>
+          </div>
+          <div>
+            <label>Recovery</label>
+            <input type="text" name="system.uses.recovery" value="{{system.uses.recovery}}" placeholder="Formula"/>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Action Roll Formula --}}
+      <div class="form-group">
+        <label>Action Formula</label>
+        <input type="text" name="system.formula" value="{{system.formula}}" placeholder="1d20 + @strength.mod"/>
+        <p class="notes">Formula to roll when this item is used. Leave blank for description only.</p>
+      </div>
+
+      {{!-- Action Button --}}
+      {{#if system.formula}}
+      <div class="form-group">
+        <div class="form-fields">
+          <button type="button" class="rollable" data-roll-type="item">
+            <i class="fas fa-dice-d20"></i> Use {{item.name}}
+          </button>
+        </div>
+      </div>
+      {{/if}}
+
+    </div>
+
+  </section>
+</form>

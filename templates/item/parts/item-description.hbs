@@ -1,0 +1,21 @@
+{{!-- Item Description Partial --}}
+<div class="item-description">
+  <div class="form-group">
+    <label>Description</label>
+    {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+  </div>
+  
+  {{#if system.chatFlavor}}
+  <div class="form-group">
+    <label>Chat Flavor</label>
+    <input type="text" name="system.chatFlavor" value="{{system.chatFlavor}}" placeholder="Additional text for chat messages"/>
+  </div>
+  {{/if}}
+  
+  {{#if system.source}}
+  <div class="form-group">
+    <label>Source</label>
+    <input type="text" name="system.source" value="{{system.source}}" placeholder="e.g. Player's Handbook"/>
+  </div>
+  {{/if}}
+</div>

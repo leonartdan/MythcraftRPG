@@ -1,0 +1,226 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Class Name"/></h1>
+      <div class="item-subtitle">Character Class</div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+    <a class="item" data-tab="features">Features</a>
+    <a class="item" data-tab="spellcasting">Spellcasting</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="grid grid-2col">
+        <div class="form-group">
+          <label>Hit Die</label>
+          <select name="system.hitDie">
+            {{#select system.hitDie}}
+            <option value="d6">d6</option>
+            <option value="d8">d8</option>
+            <option value="d10">d10</option>
+            <option value="d12">d12</option>
+            {{/select}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Primary Attributes</label>
+          <input type="text" name="system.primaryAttributes" value="{{join system.primaryAttributes ','}}" placeholder="e.g., Strength, Dexterity"/>
+        </div>
+      </div>
+
+      {{!-- Saving Throws --}}
+      <div class="form-group">
+        <label>Saving Throw Proficiencies</label>
+        <div class="saving-throws grid grid-4col">
+          {{#each config.attributes as |label key|}}
+          <label>
+            <input type="checkbox" name="system.savingThrows.{{key}}" {{checked (includes ../system.savingThrows key)}}/>
+            {{label}}
+          </label>
+          {{/each}}
+        </div>
+      </div>
+
+      {{!-- Skill Proficiencies --}}
+      <div class="form-group">
+        <label>Skill Proficiencies</label>
+        <div class="grid grid-2col">
+          <div>
+            <label>Number to Choose</label>
+            <input type="number" name="system.skillProficiencies.number" value="{{system.skillProficiencies.number}}" data-dtype="Number" min="0"/>
+          </div>
+          <div>
+            <label>Choices</label>
+            <input type="text" name="system.skillProficiencies.choices" value="{{join system.skillProficiencies.choices ','}}" placeholder="Available skill choices"/>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Equipment Proficiencies --}}
+      <div class="form-group">
+        <label>Equipment Proficiencies</label>
+        <textarea name="system.equipmentProficiencies" rows="3" placeholder="List armor, weapon, and tool proficiencies">{{system.equipmentProficiencies}}</textarea>
+      </div>
+
+      {{!-- Starting Equipment --}}
+      <div class="form-group">
+        <label>Starting Equipment</label>
+        <textarea name="system.startingEquipment" rows="4" placeholder="List starting equipment and alternatives">{{system.startingEquipment}}</textarea>
+      </div>
+
+    </div>
+
+    {{!-- Features Tab --}}
+    <div class="tab features" data-group="primary" data-tab="features">
+      
+      {{!-- Class Features by Level --}}
+      <div class="form-group">
+        <label>Class Features</label>
+        <div class="class-features">
+          {{#times 20}}
+          {{#with (add this 1)}}
+          <div class="feature-level">
+            <h4>Level {{this}}</h4>
+            <div class="features-at-level">
+              {{#each (lookup ../../system.classFeatures this) as |feature index|}}
+              <div class="feature flexrow">
+                <input type="text" name="system.classFeatures.{{../this}}.{{index}}.name" value="{{feature.name}}" placeholder="Feature name"/>
+                <a class="control" data-action="delete-feature" data-level="{{../this}}" data-index="{{index}}" title="Delete Feature">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+              <div class="feature-description">
+                <textarea name="system.classFeatures.{{../this}}.{{index}}.description" rows="2" placeholder="Feature description">{{feature.description}}</textarea>
+              </div>
+              {{/each}}
+              <div class="feature">
+                <a class="control" data-action="add-feature" data-level="{{this}}" title="Add Feature">
+                  <i class="fas fa-plus"></i> Add Feature
+                </a>
+              </div>
+            </div>
+          </div>
+          {{/with}}
+          {{/times}}
+        </div>
+      </div>
+
+    </div>
+
+    {{!-- Spellcasting Tab --}}
+    <div class="tab spellcasting" data-group="primary" data-tab="spellcasting">
+      
+      {{!-- Spellcasting Enabled --}}
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="system.spellcasting.enabled" {{checked system.spellcasting.enabled}}/>
+          This class has spellcasting
+        </label>
+      </div>
+
+      {{#if system.spellcasting.enabled}}
+      
+      {{!-- Magic Source --}}
+      <div class="form-group">
+        <label>Magic Source</label>
+        <select name="system.spellcasting.magicSource">
+          {{#select system.spellcasting.magicSource}}
+          <option value="arcane">Arcane</option>
+          <option value="divine">Divine</option>
+          <option value="occult">Occult</option>
+          <option value="primal">Primal</option>
+          <option value="psionic">Psionic</option>
+          {{/select}}
+        </select>
+      </div>
+
+      {{!-- Spell Slots by Level --}}
+      <div class="form-group">
+        <label>Spell Slots by Class Level</label>
+        <table class="spell-slots-table">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>1st</th>
+              <th>2nd</th>
+              <th>3rd</th>
+              <th>4th</th>
+              <th>5th</th>
+              <th>6th</th>
+              <th>7th</th>
+              <th>8th</th>
+              <th>9th</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#times 20}}
+            {{#with (add this 1)}}
+            <tr>
+              <td>{{this}}</td>
+              {{#times 9}}
+              {{#with (add this 1)}}
+              <td>
+                <input type="number" name="system.spellcasting.slots.{{../this}}.{{this}}" value="{{lookup (lookup ../../../system.spellcasting.slots ../this) this}}" data-dtype="Number" min="0"/>
+              </td>
+              {{/with}}
+              {{/times}}
+            </tr>
+            {{/with}}
+            {{/times}}
+          </tbody>
+        </table>
+      </div>
+
+      {{!-- Spells Known --}}
+      <div class="form-group">
+        <label>Spells Known by Level</label>
+        <table class="spells-known-table">
+          <thead>
+            <tr>
+              <th>Class Level</th>
+              <th>Spells Known</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#times 20}}
+            {{#with (add this 1)}}
+            <tr>
+              <td>{{this}}</td>
+              <td>
+                <input type="number" name="system.spellcasting.known.{{this}}" value="{{lookup ../../system.spellcasting.known this}}" data-dtype="Number" min="0"/>
+              </td>
+            </tr>
+            {{/with}}
+            {{/times}}
+          </tbody>
+        </table>
+      </div>
+
+      {{/if}}
+
+    </div>
+
+  </section>
+</form>

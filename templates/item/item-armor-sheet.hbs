@@ -1,0 +1,147 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Armor Name"/></h1>
+      <div class="item-subtitle">{{localize item.type}} - {{capitalize system.type.value}}</div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="form-group">
+        <label>Armor Type</label>
+        <select name="system.type.value">
+          {{#select system.type.value}}
+          <option value="light">Light Armor</option>
+          <option value="medium">Medium Armor</option>
+          <option value="heavy">Heavy Armor</option>
+          <option value="shield">Shield</option>
+          {{/select}}
+        </select>
+      </div>
+
+      <div class="grid grid-3col">
+        <div class="form-group">
+          <label>Weight (lbs)</label>
+          <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number" step="0.1"/>
+        </div>
+        <div class="form-group">
+          <label>Cost</label>
+          <div class="flexrow">
+            <input type="number" name="system.cost.value" value="{{system.cost.value}}" data-dtype="Number"/>
+            <select name="system.cost.denomination">
+              {{#select system.cost.denomination}}
+              <option value="cp">CP</option>
+              <option value="sp">SP</option>
+              <option value="gp">GP</option>
+              <option value="pp">PP</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Rarity</label>
+          <select name="system.rarity">
+            {{#select system.rarity}}
+            <option value="common">Common</option>
+            <option value="uncommon">Uncommon</option>
+            <option value="rare">Rare</option>
+            <option value="very-rare">Very Rare</option>
+            <option value="legendary">Legendary</option>
+            <option value="artifact">Artifact</option>
+            {{/select}}
+          </select>
+        </div>
+      </div>
+
+      {{!-- Defense Properties --}}
+      <div class="grid grid-3col">
+        <div class="form-group">
+          <label>Defense Value</label>
+          <input type="number" name="system.defense.value" value="{{system.defense.value}}" data-dtype="Number"/>
+        </div>
+        <div class="form-group">
+          <label>Max Dex Bonus</label>
+          <input type="number" name="system.defense.dex" value="{{system.defense.dex}}" data-dtype="Number" placeholder="None"/>
+        </div>
+        <div class="form-group">
+          <label>Defense Type</label>
+          <select name="system.defense.type">
+            {{#select system.defense.type}}
+            <option value="physical">Physical</option>
+            <option value="mental">Mental</option>
+            <option value="social">Social</option>
+            {{/select}}
+          </select>
+        </div>
+      </div>
+
+      {{!-- Armor Properties --}}
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="system.stealth" {{checked system.stealth}}/>
+          Disadvantage on Stealth
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="system.proficient" {{checked system.proficient}}/>
+          Proficient
+        </label>
+      </div>
+
+      {{!-- Equipment Status --}}
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="system.equipped" {{checked system.equipped}}/>
+          Equipped
+        </label>
+      </div>
+
+      {{!-- Magical Properties --}}
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="system.attuned" {{checked system.attuned}}/>
+          Requires Attunement
+        </label>
+      </div>
+
+      {{!-- Base Item --}}
+      <div class="form-group">
+        <label>Base Item</label>
+        <input type="text" name="system.type.baseItem" value="{{system.type.baseItem}}" placeholder="e.g., Leather Armor"/>
+      </div>
+
+      {{!-- Quantity --}}
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number" min="0"/>
+      </div>
+
+    </div>
+
+  </section>
+</form>

@@ -1,0 +1,194 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Weapon Name"/></h1>
+      <div class="item-subtitle">{{localize item.type}} - {{capitalize system.weaponType}}</div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="form-group">
+        <label>Weapon Type</label>
+        <select name="system.weaponType">
+          {{#select system.weaponType}}
+          <option value="melee">Melee</option>
+          <option value="ranged">Ranged</option>
+          <option value="thrown">Thrown</option>
+          {{/select}}
+        </select>
+      </div>
+
+      <div class="grid grid-3col">
+        <div class="form-group">
+          <label>Weight (lbs)</label>
+          <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number" step="0.1"/>
+        </div>
+        <div class="form-group">
+          <label>Cost</label>
+          <div class="flexrow">
+            <input type="number" name="system.cost.value" value="{{system.cost.value}}" data-dtype="Number"/>
+            <select name="system.cost.denomination">
+              {{#select system.cost.denomination}}
+              <option value="cp">CP</option>
+              <option value="sp">SP</option>
+              <option value="gp">GP</option>
+              <option value="pp">PP</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Rarity</label>
+          <select name="system.rarity">
+            {{#select system.rarity}}
+            <option value="common">Common</option>
+            <option value="uncommon">Uncommon</option>
+            <option value="rare">Rare</option>
+            <option value="very-rare">Very Rare</option>
+            <option value="legendary">Legendary</option>
+            <option value="artifact">Artifact</option>
+            {{/select}}
+          </select>
+        </div>
+      </div>
+
+      {{!-- Combat Properties --}}
+      <div class="form-group">
+        <label>Action Point Cost</label>
+        <input type="number" name="system.actionCost" value="{{system.actionCost}}" data-dtype="Number" min="0"/>
+      </div>
+
+      {{!-- Damage --}}
+      <div class="form-group">
+        <label>Damage</label>
+        <ol class="damage-parts">
+          {{#each system.damage.parts as |part index|}}
+          <li class="damage-part flexrow">
+            <input type="text" name="system.damage.parts.{{index}}.0" value="{{part.[0]}}" placeholder="1d6"/>
+            <select name="system.damage.parts.{{index}}.1">
+              {{#select part.[1]}}
+              <option value="bludgeoning">Bludgeoning</option>
+              <option value="piercing">Piercing</option>
+              <option value="slashing">Slashing</option>
+              <option value="fire">Fire</option>
+              <option value="cold">Cold</option>
+              <option value="lightning">Lightning</option>
+              <option value="acid">Acid</option>
+              <option value="poison">Poison</option>
+              <option value="psychic">Psychic</option>
+              <option value="necrotic">Necrotic</option>
+              <option value="radiant">Radiant</option>
+              {{/select}}
+            </select>
+            <a class="damage-control" data-action="delete" data-index="{{index}}" title="Delete Damage">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+          <li class="damage-part">
+            <a class="damage-control" data-action="add" title="Add Damage">
+              <i class="fas fa-plus"></i> Add Damage
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      {{!-- Range --}}
+      {{#if (eq system.weaponType "ranged")}}
+      <div class="grid grid-2col">
+        <div class="form-group">
+          <label>Range</label>
+          <input type="number" name="system.range.value" value="{{system.range.value}}" data-dtype="Number"/>
+        </div>
+        <div class="form-group">
+          <label>Long Range</label>
+          <input type="number" name="system.range.long" value="{{system.range.long}}" data-dtype="Number"/>
+        </div>
+      </div>
+      {{/if}}
+
+      {{!-- Attributes --}}
+      <div class="grid grid-2col">
+        <div class="form-group">
+          <label>Attack Attribute</label>
+          <select name="system.attributes.attack">
+            {{#select system.attributes.attack}}
+            <option value="strength">Strength</option>
+            <option value="dexterity">Dexterity</option>
+            <option value="coordination">Coordination</option>
+            {{/select}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Damage Attribute</label>
+          <select name="system.attributes.damage">
+            {{#select system.attributes.damage}}
+            <option value="strength">Strength</option>
+            <option value="dexterity">Dexterity</option>
+            <option value="coordination">Coordination</option>
+            {{/select}}
+          </select>
+        </div>
+      </div>
+
+      {{!-- Weapon Properties --}}
+      <div class="form-group">
+        <label>Properties</label>
+        <div class="weapon-properties">
+          <label><input type="checkbox" name="system.properties.finesse" {{checked (includes system.properties "finesse")}}/> Finesse</label>
+          <label><input type="checkbox" name="system.properties.light" {{checked (includes system.properties "light")}}/> Light</label>
+          <label><input type="checkbox" name="system.properties.heavy" {{checked (includes system.properties "heavy")}}/> Heavy</label>
+          <label><input type="checkbox" name="system.properties.reach" {{checked (includes system.properties "reach")}}/> Reach</label>
+          <label><input type="checkbox" name="system.properties.thrown" {{checked (includes system.properties "thrown")}}/> Thrown</label>
+          <label><input type="checkbox" name="system.properties.versatile" {{checked (includes system.properties "versatile")}}/> Versatile</label>
+          <label><input type="checkbox" name="system.properties.twoHanded" {{checked (includes system.properties "twoHanded")}}/> Two-Handed</label>
+        </div>
+      </div>
+
+      {{!-- Equipment Status --}}
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="system.equipped" {{checked system.equipped}}/>
+          Equipped
+        </label>
+      </div>
+
+      {{!-- Action Buttons --}}
+      <div class="form-group">
+        <div class="form-fields">
+          <button type="button" class="rollable" data-roll-type="attack">
+            <i class="fas fa-dice-d20"></i> Attack Roll
+          </button>
+          <button type="button" class="rollable" data-roll-type="damage">
+            <i class="fas fa-dice"></i> Damage Roll
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</form>

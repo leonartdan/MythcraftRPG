@@ -1,0 +1,49 @@
+{{!-- Item Details Partial --}}
+<div class="item-details">
+  <div class="grid grid-3col">
+    <div class="form-group">
+      <label>Weight</label>
+      <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number" step="0.1"/>
+      <span class="units">lbs</span>
+    </div>
+    <div class="form-group">
+      <label>Cost</label>
+      <div class="flexrow">
+        <input type="number" name="system.cost.value" value="{{system.cost.value}}" data-dtype="Number"/>
+        <select name="system.cost.denomination">
+          {{#select system.cost.denomination}}
+          <option value="cp">CP</option>
+          <option value="sp">SP</option>
+          <option value="gp">GP</option>
+          <option value="pp">PP</option>
+          {{/select}}
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number" min="0"/>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label>Rarity</label>
+    <select name="system.rarity">
+      {{#select system.rarity}}
+      <option value="common">Common</option>
+      <option value="uncommon">Uncommon</option>
+      <option value="rare">Rare</option>
+      <option value="very-rare">Very Rare</option>
+      <option value="legendary">Legendary</option>
+      <option value="artifact">Artifact</option>
+      {{/select}}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label class="checkbox">
+      <input type="checkbox" name="system.identified" {{checked system.identified}}/>
+      Identified
+    </label>
+  </div>
+</div>
