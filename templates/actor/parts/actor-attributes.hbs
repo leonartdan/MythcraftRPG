@@ -1,0 +1,17 @@
+{{!-- Actor Attributes Partial --}}
+<div class="attributes">
+  <h3>Attributes</h3>
+  <div class="grid grid-4col">
+    {{#each system.attributes as |attribute key|}}
+    <div class="attribute">
+      <label class="attribute-label">{{capitalize key}}</label>
+      <div class="attribute-value">
+        <input type="number" name="system.attributes.{{key}}.value" value="{{attribute.value}}" data-dtype="Number"/>
+      </div>
+      <div class="attribute-mod rollable attribute-roll" data-attribute="{{key}}">
+        <span>{{numberFormat attribute.mod decimals=0 sign=true}}</span>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

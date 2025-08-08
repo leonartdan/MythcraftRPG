@@ -1,0 +1,27 @@
+{{!-- Roll Card Template --}}
+<div class="mythcraft roll-card">
+  <div class="card-header">
+    {{#if title}}
+    <h3>{{title}}</h3>
+    {{/if}}
+    {{#if subtitle}}
+    <h4>{{subtitle}}</h4>
+    {{/if}}
+  </div>
+  
+  <div class="card-content">
+    {{#if description}}
+    <div class="description">{{description}}</div>
+    {{/if}}
+    
+    {{#if roll}}
+    <div class="dice-roll">
+      <div class="dice-result">
+        <div class="dice-formula">{{rollFormula}}</div>
+        <div class="dice-total">{{rollTotal}}</div>
+      </div>
+      <div class="dice-tooltip">{{{rollTooltip}}}</div>
+    </div>
+    {{/if}}
+  </div>
+</div>

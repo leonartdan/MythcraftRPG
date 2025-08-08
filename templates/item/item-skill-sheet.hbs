@@ -1,0 +1,74 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Skill Name"/></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      {{> "systems/mythcraft/templates/item/parts/item-description.hbs"}}
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      <div class="skill-details">
+        <h3>Skill Details</h3>
+        
+        <div class="flexrow">
+          <div class="attribute">
+            <label>Governing Attribute</label>
+            <select name="system.ability">
+              {{#select system.ability}}
+              <option value="strength">Strength</option>
+              <option value="dexterity">Dexterity</option>
+              <option value="endurance">Endurance</option>
+              <option value="intelligence">Intelligence</option>
+              <option value="awareness">Awareness</option>
+              <option value="coordination">Coordination</option>
+              <option value="willpower">Willpower</option>
+              <option value="presence">Presence</option>
+              {{/select}}
+            </select>
+          </div>
+          
+          <div class="ranks">
+            <label>Ranks</label>
+            <input type="number" name="system.ranks" value="{{system.ranks}}" data-dtype="Number"/>
+          </div>
+          
+          <div class="bonus">
+            <label>Misc Bonus</label>
+            <input type="number" name="system.bonus" value="{{system.bonus}}" data-dtype="Number"/>
+          </div>
+        </div>
+        
+        <div class="proficient">
+          <label>
+            <input type="checkbox" name="system.proficient" {{checked system.proficient}}/>
+            Proficient
+          </label>
+        </div>
+        
+        <div class="tags">
+          <label>Tags</label>
+          <input type="text" name="system.tags" value="{{system.tags}}" placeholder="Enter tags separated by commas"/>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</form>

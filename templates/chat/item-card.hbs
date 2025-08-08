@@ -1,0 +1,17 @@
+{{!-- Item Card Template --}}
+<div class="mythcraft item-card">
+  <div class="card-header">
+    <h3>{{item.name}}</h3>
+    <div class="item-type">{{item.type}}</div>
+  </div>
+  
+  <div class="card-content">
+    {{#if system.description}}
+    <div class="description">{{{system.description}}}</div>
+    {{/if}}
+    
+    {{#if effect}}
+    <div class="effect">{{effect}}</div>
+    {{/if}}
+  </div>
+</div>

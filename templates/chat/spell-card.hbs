@@ -1,0 +1,35 @@
+{{!-- Spell Card Template --}}
+<div class="mythcraft spell-card">
+  <div class="card-header">
+    <h3>{{spell.name}}</h3>
+    <div class="spell-info">
+      <span class="spell-level">Level {{system.level}}</span>
+      <span class="spell-school">{{system.school}}</span>
+      <span class="magic-source">{{system.magicSource}}</span>
+    </div>
+  </div>
+  
+  <div class="card-content">
+    {{#if system.description}}
+    <div class="description">{{{system.description}}}</div>
+    {{/if}}
+    
+    {{#if effect}}
+    <div class="effect">{{effect}}</div>
+    {{/if}}
+    
+    <div class="spell-details">
+      {{#if system.actionCost}}
+      <div class="action-cost">Action Cost: {{system.actionCost}} AP</div>
+      {{/if}}
+      
+      {{#if system.range.value}}
+      <div class="range">Range: {{system.range.value}} {{system.range.units}}</div>
+      {{/if}}
+      
+      {{#if system.target.value}}
+      <div class="target">Target: {{system.target.type}} ({{system.target.value}})</div>
+      {{/if}}
+    </div>
+  </div>
+</div>

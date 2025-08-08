@@ -1,0 +1,63 @@
+{{!-- Armor Details Partial --}}
+<div class="armor-details">
+  <h3>Armor Properties</h3>
+  
+  <div class="grid grid-2col">
+    <div class="armor-type">
+      <label>Armor Type</label>
+      <select name="system.type.value">
+        {{#select system.type.value}}
+        <option value="light">Light</option>
+        <option value="medium">Medium</option>
+        <option value="heavy">Heavy</option>
+        <option value="shield">Shield</option>
+        {{/select}}
+      </select>
+    </div>
+    
+    <div class="base-item">
+      <label>Base Item</label>
+      <input type="text" name="system.type.baseItem" value="{{system.type.baseItem}}" placeholder="leather armor"/>
+    </div>
+  </div>
+  
+  <div class="defense">
+    <label>Defense</label>
+    <div class="flexrow">
+      <div class="defense-value">
+        <label>Value</label>
+        <input type="number" name="system.defense.value" value="{{system.defense.value}}" data-dtype="Number"/>
+      </div>
+      <div class="dex-bonus">
+        <label>Max Dex Bonus</label>
+        <input type="number" name="system.defense.dex" value="{{system.defense.dex}}" data-dtype="Number" placeholder="No limit"/>
+      </div>
+      <div class="defense-type">
+        <label>Defense Type</label>
+        <select name="system.defense.type">
+          {{#select system.defense.type}}
+          <option value="physical">Physical</option>
+          <option value="mental">Mental</option>
+          <option value="social">Social</option>
+          {{/select}}
+        </select>
+      </div>
+    </div>
+  </div>
+  
+  <div class="properties">
+    <div class="stealth">
+      <label>
+        <input type="checkbox" name="system.stealth" {{checked system.stealth}}/>
+        Disadvantage on Stealth
+      </label>
+    </div>
+    
+    <div class="proficient">
+      <label>
+        <input type="checkbox" name="system.proficient" {{checked system.proficient}}/>
+        Proficient
+      </label>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+{{!-- Talent Details Partial --}}
+<div class="talent-details">
+  <h3>Talent Properties</h3>
+  
+  <div class="talent-type">
+    <label>Talent Type</label>
+    <select name="system.talentType">
+      {{#select system.talentType}}
+      <option value="general">General</option>
+      <option value="combat">Combat</option>
+      <option value="magic">Magic</option>
+      <option value="skill">Skill</option>
+      <option value="lineage">Lineage</option>
+      <option value="background">Background</option>
+      {{/select}}
+    </select>
+  </div>
+  
+  <div class="prerequisites">
+    <label>Prerequisites</label>
+    <div class="prerequisite-list">
+      {{#each system.prerequisites as |prereq i|}}
+      <div class="prerequisite flexrow">
+        <input type="text" name="system.prerequisites.{{i}}" value="{{prereq}}" placeholder="Prerequisite"/>
+        <a class="prerequisite-control" data-action="delete" data-index="{{i}}"><i class="fas fa-trash"></i></a>
+      </div>
+      {{/each}}
+      <div class="prerequisite-controls">
+        <a class="prerequisite-control" data-action="add">Add Prerequisite</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="benefits">
+    <label>Benefits</label>
+    <div class="benefit-list">
+      {{#each system.benefits as |benefit i|}}
+      <div class="benefit flexrow">
+        <input type="text" name="system.benefits.{{i}}" value="{{benefit}}" placeholder="Benefit"/>
+        <a class="benefit-control" data-action="delete" data-index="{{i}}"><i class="fas fa-trash"></i></a>
+      </div>
+      {{/each}}
+      <div class="benefit-controls">
+        <a class="benefit-control" data-action="add">Add Benefit</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="tags">
+    <label>Tags</label>
+    <input type="text" name="system.tags" value="{{system.tags}}" placeholder="Enter tags separated by commas"/>
+  </div>
+</div>

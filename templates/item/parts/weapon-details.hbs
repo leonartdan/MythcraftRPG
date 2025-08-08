@@ -1,0 +1,81 @@
+{{!-- Weapon Details Partial --}}
+<div class="weapon-details">
+  <h3>Weapon Properties</h3>
+  
+  <div class="grid grid-2col">
+    <div class="weapon-type">
+      <label>Weapon Type</label>
+      <select name="system.weaponType">
+        {{#select system.weaponType}}
+        <option value="melee">Melee</option>
+        <option value="ranged">Ranged</option>
+        <option value="thrown">Thrown</option>
+        {{/select}}
+      </select>
+    </div>
+    
+    <div class="action-cost">
+      <label>Action Cost</label>
+      <input type="number" name="system.actionCost" value="{{system.actionCost}}" data-dtype="Number"/>
+    </div>
+  </div>
+  
+  <div class="damage">
+    <label>Damage</label>
+    <div class="damage-parts">
+      {{#each system.damage.parts as |part i|}}
+      <div class="damage-part flexrow">
+        <input type="text" name="system.damage.parts.{{i}}.0" value="{{part.0}}" placeholder="1d6"/>
+        <select name="system.damage.parts.{{i}}.1">
+          <option value="bludgeoning" {{#if (eq part.1 "bludgeoning")}}selected{{/if}}>Bludgeoning</option>
+          <option value="piercing" {{#if (eq part.1 "piercing")}}selected{{/if}}>Piercing</option>
+          <option value="slashing" {{#if (eq part.1 "slashing")}}selected{{/if}}>Slashing</option>
+          <option value="fire" {{#if (eq part.1 "fire")}}selected{{/if}}>Fire</option>
+          <option value="cold" {{#if (eq part.1 "cold")}}selected{{/if}}>Cold</option>
+          <option value="lightning" {{#if (eq part.1 "lightning")}}selected{{/if}}>Lightning</option>
+          <option value="acid" {{#if (eq part.1 "acid")}}selected{{/if}}>Acid</option>
+          <option value="poison" {{#if (eq part.1 "poison")}}selected{{/if}}>Poison</option>
+          <option value="psychic" {{#if (eq part.1 "psychic")}}selected{{/if}}>Psychic</option>
+          <option value="necrotic" {{#if (eq part.1 "necrotic")}}selected{{/if}}>Necrotic</option>
+          <option value="radiant" {{#if (eq part.1 "radiant")}}selected{{/if}}>Radiant</option>
+        </select>
+        <a class="damage-control" data-action="delete" data-index="{{i}}"><i class="fas fa-trash"></i></a>
+      </div>
+      {{/each}}
+      <div class="damage-controls">
+        <a class="damage-control" data-action="add">Add Damage</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="grid grid-2col">
+    <div class="attack-attribute">
+      <label>Attack Attribute</label>
+      <select name="system.attributes.attack">
+        {{#select system.attributes.attack}}
+        <option value="strength">Strength</option>
+        <option value="dexterity">Dexterity</option>
+        <option value="coordination">Coordination</option>
+        {{/select}}
+      </select>
+    </div>
+    
+    <div class="damage-attribute">
+      <label>Damage Attribute</label>
+      <select name="system.attributes.damage">
+        {{#select system.attributes.damage}}
+        <option value="strength">Strength</option>
+        <option value="dexterity">Dexterity</option>
+        <option value="coordination">Coordination</option>
+        {{/select}}
+      </select>
+    </div>
+  </div>
+  
+  <div class="proficient">
+    <label>
+      <input type="checkbox" name="system.proficient" {{checked system.proficient}}/>
+      Proficient
+    </label>
+  </div>
+</div>

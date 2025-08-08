@@ -1,0 +1,28 @@
+{{!-- Talent Card Template --}}
+<div class="mythcraft talent-card">
+  <div class="card-header">
+    <h3>{{talent.name}}</h3>
+    <div class="talent-type">{{system.talentType}}</div>
+  </div>
+  
+  <div class="card-content">
+    {{#if system.description}}
+    <div class="description">{{{system.description}}}</div>
+    {{/if}}
+    
+    {{#if system.benefits}}
+    <div class="benefits">
+      <strong>Benefits:</strong>
+      <ul>
+        {{#each system.benefits as |benefit|}}
+        <li>{{benefit}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+    
+    {{#if effect}}
+    <div class="effect">{{effect}}</div>
+    {{/if}}
+  </div>
+</div>

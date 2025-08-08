@@ -1,0 +1,27 @@
+{{!-- Actor Biography Partial --}}
+<div class="biography">
+  <div class="biography-section">
+    <label>Biography</label>
+    {{editor content=system.biography.value target="system.biography.value" button=true owner=owner editable=editable}}
+  </div>
+  
+  <div class="biography-section">
+    <label>Appearance</label>
+    {{editor content=system.biography.appearance target="system.biography.appearance" button=true owner=owner editable=editable}}
+  </div>
+  
+  <div class="biography-section">
+    <label>Backstory</label>
+    {{editor content=system.biography.backstory target="system.biography.backstory" button=true owner=owner editable=editable}}
+  </div>
+  
+  <div class="biography-section">
+    <label>Goals</label>
+    {{editor content=system.biography.goals target="system.biography.goals" button=true owner=owner editable=editable}}
+  </div>
+  
+  <div class="notes">
+    <label>Notes</label>
+    {{editor content=system.notes target="system.notes" button=true owner=owner editable=editable}}
+  </div>
+</div>

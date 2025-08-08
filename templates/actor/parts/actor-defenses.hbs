@@ -1,0 +1,16 @@
+{{!-- Actor Defenses Partial --}}
+<div class="defenses">
+  <h3>Defenses</h3>
+  <div class="grid grid-3col">
+    {{#each system.defenses as |defense key|}}
+    <div class="defense">
+      <label class="defense-label">{{capitalize key}}</label>
+      <div class="defense-value flexrow">
+        <input type="number" name="system.defenses.{{key}}.value" value="{{defense.value}}" data-dtype="Number"/>
+        <span>+</span>
+        <input type="number" name="system.defenses.{{key}}.bonus" value="{{defense.bonus}}" data-dtype="Number"/>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

@@ -1,0 +1,25 @@
+{{!-- Actor Skills Partial --}}
+<div class="skills">
+  <h3>Skills</h3>
+  <div class="items-list">
+    <ol class="items-list">
+      {{#each skills as |skill i|}}
+      <li class="item flexrow" data-item-id="{{skill._id}}">
+        <div class="item-name">{{skill.name}}</div>
+        <div class="item-formula">
+          <span class="rollable" data-roll="1d20+{{skill.system.mod}}" data-label="{{skill.name}}">
+            {{numberFormat skill.system.mod decimals=0 sign=true}}
+          </span>
+        </div>
+        <div class="item-controls">
+          <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+  <div class="item-create">
+    <a class="item-create" data-type="skill">Add Skill</a>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+{{!-- Actor Inventory Partial --}}
+<div class="inventory">
+  <h3>Inventory</h3>
+  
+  {{!-- Weapons --}}
+  <div class="item-category">
+    <h4>Weapons</h4>
+    <ol class="items-list">
+      {{#each weapons as |weapon i|}}
+      <li class="item flexrow" data-item-id="{{weapon._id}}">
+        <div class="item-image"><img src="{{weapon.img}}" title="{{weapon.name}}" width="24" height="24"/></div>
+        <div class="item-name">{{weapon.name}}</div>
+        <div class="item-controls">
+          <a class="item-control item-roll" data-roll-type="attack" title="Attack Roll"><i class="fas fa-dice-d20"></i></a>
+          <a class="item-control item-roll" data-roll-type="damage" title="Damage Roll"><i class="fas fa-dice-six"></i></a>
+          <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+    <div class="item-create">
+      <a class="item-create" data-type="weapon">Add Weapon</a>
+    </div>
+  </div>
+  
+  {{!-- Armor --}}
+  <div class="item-category">
+    <h4>Armor</h4>
+    <ol class="items-list">
+      {{#each armor as |armor i|}}
+      <li class="item flexrow" data-item-id="{{armor._id}}">
+        <div class="item-image"><img src="{{armor.img}}" title="{{armor.name}}" width="24" height="24"/></div>
+        <div class="item-name">{{armor.name}}</div>
+        <div class="item-controls">
+          <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+    <div class="item-create">
+      <a class="item-create" data-type="armor">Add Armor</a>
+    </div>
+  </div>
+  
+  {{!-- Equipment --}}
+  <div class="item-category">
+    <h4>Equipment</h4>
+    <ol class="items-list">
+      {{#each gear as |item i|}}
+      <li class="item flexrow" data-item-id="{{item._id}}">
+        <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
+        <div class="item-name">{{item.name}}</div>
+        <div class="item-quantity">{{item.system.quantity}}</div>
+        <div class="item-controls">
+          <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+    <div class="item-create">
+      <a class="item-create" data-type="equipment">Add Equipment</a>
+    </div>
+  </div>
+</div>

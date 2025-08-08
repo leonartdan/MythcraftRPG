@@ -1,0 +1,30 @@
+{{!-- Actor Spells Partial --}}
+<div class="spells">
+  <h3>Spells</h3>
+  
+  {{#each spells as |spellList source|}}
+  {{#if spellList.length}}
+  <div class="spell-source">
+    <h4>{{capitalize source}} Spells</h4>
+    <ol class="items-list">
+      {{#each spellList as |spell i|}}
+      <li class="item flexrow" data-item-id="{{spell._id}}">
+        <div class="item-image"><img src="{{spell.img}}" title="{{spell.name}}" width="24" height="24"/></div>
+        <div class="item-name">{{spell.name}}</div>
+        <div class="item-level">Level {{spell.system.level}}</div>
+        <div class="item-controls">
+          <a class="item-control item-roll" data-roll-type="spell" title="Cast Spell"><i class="fas fa-magic"></i></a>
+          <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+  {{/if}}
+  {{/each}}
+  
+  <div class="item-create">
+    <a class="item-create" data-type="spell">Add Spell</a>
+  </div>
+</div>
