@@ -1,0 +1,68 @@
+{{!-- Spell Details Section --}}
+<div class="spell-details">
+  <div class="form-group">
+    <h3>Spell Properties</h3>
+    <div class="grid grid-3col">
+      <div>
+        <label>Spell Level</label>
+        <input type="number" name="system.level" value="{{system.level}}" data-dtype="Number" min="1" max="9"/>
+      </div>
+      <div>
+        <label>Action Cost</label>
+        <input type="number" name="system.actionCost" value="{{system.actionCost}}" data-dtype="Number"/>
+      </div>
+      <div>
+        <label>Magic Source</label>
+        <select name="system.magicSource">
+          <option value="arcane" {{selected "arcane" system.magicSource}}>Arcane</option>
+          <option value="divine" {{selected "divine" system.magicSource}}>Divine</option>
+          <option value="occult" {{selected "occult" system.magicSource}}>Occult</option>
+          <option value="primal" {{selected "primal" system.magicSource}}>Primal</option>
+          <option value="psionic" {{selected "psionic" system.magicSource}}>Psionic</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="grid grid-2col">
+      <div>
+        <label>School</label>
+        <select name="system.school">
+          <option value="" {{selected "" system.school}}>None</option>
+          <option value="abjuration" {{selected "abjuration" system.school}}>Abjuration</option>
+          <option value="conjuration" {{selected "conjuration" system.school}}>Conjuration</option>
+          <option value="divination" {{selected "divination" system.school}}>Divination</option>
+          <option value="enchantment" {{selected "enchantment" system.school}}>Enchantment</option>
+          <option value="evocation" {{selected "evocation" system.school}}>Evocation</option>
+          <option value="illusion" {{selected "illusion" system.school}}>Illusion</option>
+          <option value="necromancy" {{selected "necromancy" system.school}}>Necromancy</option>
+          <option value="transmutation" {{selected "transmutation" system.school}}>Transmutation</option>
+        </select>
+      </div>
+      <div>
+        <label>Spellcasting Ability</label>
+        <select name="system.ability">
+          <option value="" {{selected "" system.ability}}>None</option>
+          <option value="intelligence" {{selected "intelligence" system.ability}}>Intelligence</option>
+          <option value="willpower" {{selected "willpower" system.ability}}>Willpower</option>
+          <option value="presence" {{selected "presence" system.ability}}>Presence</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <h3>Components</h3>
+    <div class="grid grid-2col">
+      <div>
+        <label><input type="checkbox" name="system.components.verbal" {{checked system.components.verbal}}/> Verbal</label>
+        <label><input type="checkbox" name="system.components.somatic" {{checked system.components.somatic}}/> Somatic</label>
+      </div>
+      <div>
+        <label><input type="checkbox" name="system.components.material" {{checked system.components.material}}/> Material</label>
+        <label><input type="checkbox" name="system.components.focus" {{checked system.components.focus}}/> Focus</label>
+      </div>
+    </div>
+  </div>
+</div>

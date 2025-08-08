@@ -1,0 +1,116 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="item-name"><input name="name" type="text" value="{{item.name}}" placeholder="Armor Name"/></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="form-group">
+        <div class="grid grid-3col">
+          <div>
+            <label>Quantity</label>
+            <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Weight (lbs)</label>
+            <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Cost</label>
+            <div class="flexrow">
+              <input type="number" name="system.cost.value" value="{{system.cost.value}}" data-dtype="Number"/>
+              <select name="system.cost.denomination">
+                <option value="cp" {{selected "cp" system.cost.denomination}}>CP</option>
+                <option value="sp" {{selected "sp" system.cost.denomination}}>SP</option>
+                <option value="gp" {{selected "gp" system.cost.denomination}}>GP</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Armor Specific --}}
+      <div class="form-group">
+        <h3>Armor Properties</h3>
+        <div class="grid grid-2col">
+          <div>
+            <label>Armor Type</label>
+            <select name="system.type.value">
+              {{#each armorTypes as |label key|}}
+              <option value="{{key}}" {{selected key system.type.value}}>{{localize label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div>
+            <label>Base Item</label>
+            <input type="text" name="system.type.baseItem" value="{{system.type.baseItem}}" placeholder="leather armor"/>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Defense --}}
+      <div class="form-group">
+        <h3>Defense</h3>
+        <div class="grid grid-3col">
+          <div>
+            <label>Defense Value</label>
+            <input type="number" name="system.defense.value" value="{{system.defense.value}}" data-dtype="Number"/>
+          </div>
+          <div>
+            <label>Max Dex Bonus</label>
+            <input type="number" name="system.defense.dex" value="{{system.defense.dex}}" data-dtype="Number" placeholder="No limit"/>
+          </div>
+          <div>
+            <label>Defense Type</label>
+            <select name="system.defense.type">
+              <option value="physical" {{selected "physical" system.defense.type}}>Physical</option>
+              <option value="mental" {{selected "mental" system.defense.type}}>Mental</option>
+              <option value="social" {{selected "social" system.defense.type}}>Social</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Equipment Status --}}
+      <div class="form-group">
+        <div class="grid grid-3col">
+          <div>
+            <label><input type="checkbox" name="system.equipped" {{checked system.equipped}}/> Equipped</label>
+          </div>
+          <div>
+            <label><input type="checkbox" name="system.proficient" {{checked system.proficient}}/> Proficient</label>
+          </div>
+          <div>
+            <label><input type="checkbox" name="system.stealth" {{checked system.stealth}}/> Stealth Disadvantage</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</form>

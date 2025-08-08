@@ -50,21 +50,13 @@ export class MythCraftActor extends Actor {
     // Make modifications to data here. For example:
     const systemData = actorData.system;
 
-    // Calculate attribute modifiers for NPCs
+    // Calculate attribute modifiers
     for (let [key, attribute] of Object.entries(systemData.attributes)) {
       attribute.mod = attribute.value;
     }
   }
 
-  /**
-   * @override
-   * Augment the basic actor data with additional dynamic data. Typically,
-   * you'll want to handle most of your calculated/derived data in this step.
-   * Data calculated in this step should generally not exist in template.json
-   * (such as ability modifiers rather than ability scores) and should be
-   * available both inside and outside of character sheets (such as if an actor
-   * is queried and has a roll executed directly from it).
-   */
+  /** @override */
   prepareDerivedData() {
     const actorData = this;
     const systemData = actorData.system;
@@ -72,60 +64,32 @@ export class MythCraftActor extends Actor {
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
-    this._prepareCharacterData(actorData);
-    this._prepareNpcData(actorData);
-
-    // Calculate Action Point limits
-    this._calculateActionPoints(systemData);
-    
-    // Calculate defenses
-    this._calculateDefenses(systemData);
-    
-    // Calculate health
-    this._calculateHealth(systemData);
+    if (actorData.type === 'character') this._prepareCharacterDerivedData(actorData);
+    if (actorData.type === 'npc') this._prepareNpcDerivedData(actorData);
   }
 
   /**
-   * Calculate Action Points based on level and attributes
+   * Prepare Character type derived data
    */
-  _calculateActionPoints(systemData) {
-    const base = 3;
-    const coordBonus = Math.floor(systemData.attributes.coordination.value / 2);
-    systemData.actionPoints.max = base + coordBonus;
-    
-    // Calculate carry limit based on level
-    const level = systemData.level.value;
-    systemData.actionPoints.carryLimit = Math.floor(level / 2) + 1;
+  _prepareCharacterDerivedData(actorData) {
+    const systemData = actorData.system;
+
+    // Calculate derived defenses based on attributes
+    systemData.defenses.physical.value = 10 + systemData.attributes.endurance.value + (systemData.defenses.physical.bonus || 0);
+    systemData.defenses.mental.value = 10 + systemData.attributes.willpower.value + (systemData.defenses.mental.bonus || 0);
+    systemData.defenses.social.value = 10 + systemData.attributes.presence.value + (systemData.defenses.social.bonus || 0);
   }
 
   /**
-   * Calculate defenses based on attributes and equipment
+   * Prepare NPC type derived data
    */
-  _calculateDefenses(systemData) {
-    // Physical Defense = 10 + DEX + armor bonuses
-    systemData.defenses.physical.value = 10 + systemData.attributes.dexterity.value + systemData.defenses.physical.bonus;
-    
-    // Mental Defense = 10 + AWR + bonuses
-    systemData.defenses.mental.value = 10 + systemData.attributes.awareness.value + systemData.defenses.mental.bonus;
-    
-    // Social Defense = 10 + PRE + bonuses  
-    systemData.defenses.social.value = 10 + systemData.attributes.presence.value + systemData.defenses.social.bonus;
-  }
+  _prepareNpcDerivedData(actorData) {
+    const systemData = actorData.system;
 
-  /**
-   * Calculate health based on level and endurance
-   */
-  _calculateHealth(systemData) {
-    const level = systemData.level.value;
-    const endMod = systemData.attributes.endurance.value;
-    const baseHp = 20 + (level * 5) + (endMod * level);
-    
-    if (systemData.health.max !== baseHp) {
-      systemData.health.max = baseHp;
-      if (systemData.health.value > baseHp) {
-        systemData.health.value = baseHp;
-      }
-    }
+    // Calculate derived defenses based on attributes
+    systemData.defenses.physical.value = 10 + systemData.attributes.endurance.value + (systemData.defenses.physical.bonus || 0);
+    systemData.defenses.mental.value = 10 + systemData.attributes.willpower.value + (systemData.defenses.mental.bonus || 0);
+    systemData.defenses.social.value = 10 + systemData.attributes.presence.value + (systemData.defenses.social.bonus || 0);
   }
 
   /**
@@ -147,17 +111,12 @@ export class MythCraftActor extends Actor {
   _getCharacterRollData(data) {
     if (this.type !== 'character') return;
 
-    // Copy the ability scores to the top level, so that rolls can use
-    // formulas like `@str.mod + 4`.
+    // Copy the attribute scores to the top level, so that rolls can use
+    // formulas like `@strength.value + 4`.
     if (data.attributes) {
       for (let [k, v] of Object.entries(data.attributes)) {
         data[k] = foundry.utils.deepClone(v);
       }
-    }
-
-    // Add level for easier access, or fall back to 0.
-    if (data.level) {
-      data.lvl = data.level.value ?? 0;
     }
   }
 
@@ -172,88 +131,100 @@ export class MythCraftActor extends Actor {
 
   /**
    * Roll an attribute check
-   * @param {string} attributeId    The attribute key (e.g. "strength")
-   * @param {object} options        Options which configure how the roll is processed
+   * @param {string} attributeId The attribute id (e.g. "strength")
+   * @param {object} options Options which configure how ability tests are rolled
+   * @returns {Promise<Roll>} The resulting roll
    */
   async rollAttribute(attributeId, options = {}) {
     const attribute = this.system.attributes[attributeId];
-    if (!attribute) return;
+    if (!attribute) {
+      ui.notifications.warn(`Invalid attribute: ${attributeId}`);
+      return;
+    }
 
     const rollData = this.getRollData();
-    const formula = `1d20 + @${attributeId}.value`;
-    
+    const formula = `1d20 + ${attribute.value}`;
     const roll = new Roll(formula, rollData);
     
-    const label = `${CONFIG.MYTHCRAFT?.attributes?.[attributeId] ?? attributeId.capitalize()} Check`;
+    await roll.evaluate();
     
-    return roll.toMessage({
+    const label = `${game.i18n.localize(`MYTHCRAFT.Attribute${attributeId.capitalize()}`)} Check`;
+    
+    roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this }),
       flavor: label,
       rollMode: game.settings.get('core', 'rollMode'),
     });
+
+    return roll;
   }
 
   /**
    * Roll initiative for this actor
+   * @param {object} options Options which configure how initiative is rolled
+   * @returns {Promise<Roll>} The resulting roll
    */
   async rollInitiative(options = {}) {
+    const awarenessValue = this.system.attributes.awareness?.value || 0;
     const rollData = this.getRollData();
-    const formula = "1d20 + @awareness.value";
-    
+    const formula = `1d20 + ${awarenessValue}`;
     const roll = new Roll(formula, rollData);
     
-    return roll.toMessage({
+    await roll.evaluate();
+    
+    const label = game.i18n.localize("MYTHCRAFT.Initiative");
+    
+    roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: "Initiative",
+      flavor: label,
       rollMode: game.settings.get('core', 'rollMode'),
     });
+
+    return roll;
   }
 
   /**
-   * Spend Action Points
-   * @param {number} cost   Number of AP to spend
-   * @returns {boolean}     Whether the cost could be paid
+   * Spend action points
+   * @param {number} cost The cost in action points
+   * @returns {Promise<Actor>} This actor after the update
    */
   async spendActionPoints(cost) {
-    const current = this.system.actionPoints.value;
-    if (current < cost) {
-      ui.notifications.warn(`Not enough Action Points! Need ${cost}, have ${current}`);
-      return false;
+    const currentAP = this.system.actionPoints.value;
+    if (currentAP < cost) {
+      ui.notifications.warn("Not enough Action Points!");
+      return this;
     }
-    
-    await this.update({
-      "system.actionPoints.value": current - cost
+
+    return await this.update({
+      "system.actionPoints.value": currentAP - cost
     });
-    
-    return true;
   }
 
   /**
-   * Rest and reset Action Points
-   * @param {boolean} shortRest   Whether this is a short rest (default: true)
+   * Rest to recover resources
+   * @param {boolean} short Whether this is a short rest (true) or long rest (false)
+   * @returns {Promise<Actor>} This actor after the update
    */
-  async rest(shortRest = true) {
+  async rest(short = true) {
     const updates = {};
-    
-    if (shortRest) {
-      // Short rest: restore AP to max
-      updates["system.actionPoints.value"] = this.system.actionPoints.max;
+    const system = this.system;
+
+    if (short) {
+      // Short rest - recover action points
+      updates["system.actionPoints.value"] = system.actionPoints.max;
     } else {
-      // Long rest: restore AP and some HP
-      updates["system.actionPoints.value"] = this.system.actionPoints.max;
+      // Long rest - recover all resources
+      updates["system.health.value"] = system.health.max;
+      updates["system.actionPoints.value"] = system.actionPoints.max;
       updates["system.actionPoints.carried"] = 0;
-      
-      const healAmount = Math.floor(this.system.health.max * 0.5);
-      const newHp = Math.min(this.system.health.max, this.system.health.value + healAmount);
-      updates["system.health.value"] = newHp;
     }
-    
+
     await this.update(updates);
     
     ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      content: `${this.name} takes a ${shortRest ? 'short' : 'long'} rest.`
+      content: `${this.name} takes a ${short ? 'short' : 'long'} rest.`
     });
   }
 }

@@ -1,0 +1,72 @@
+{{!-- Talent Details Section --}}
+<div class="talent-details">
+  <div class="form-group">
+    <h3>Talent Properties</h3>
+    <div class="grid grid-2col">
+      <div>
+        <label>Talent Type</label>
+        <select name="system.talentType">
+          <option value="general" {{selected "general" system.talentType}}>General</option>
+          <option value="combat" {{selected "combat" system.talentType}}>Combat</option>
+          <option value="magic" {{selected "magic" system.talentType}}>Magic</option>
+          <option value="skill" {{selected "skill" system.talentType}}>Skill</option>
+          <option value="lineage" {{selected "lineage" system.talentType}}>Lineage</option>
+          <option value="background" {{selected "background" system.talentType}}>Background</option>
+        </select>
+      </div>
+      <div>
+        <label>Rarity</label>
+        <select name="system.rarity">
+          <option value="common" {{selected "common" system.rarity}}>Common</option>
+          <option value="uncommon" {{selected "uncommon" system.rarity}}>Uncommon</option>
+          <option value="rare" {{selected "rare" system.rarity}}>Rare</option>
+          <option value="very rare" {{selected "very rare" system.rarity}}>Very Rare</option>
+          <option value="legendary" {{selected "legendary" system.rarity}}>Legendary</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <h3>Prerequisites</h3>
+    <ol class="prerequisites-list">
+      {{#each system.prerequisites as |prerequisite i|}}
+      <li class="prerequisite flexrow" data-index="{{i}}">
+        <input type="text" name="system.prerequisites.{{i}}" value="{{prerequisite}}" placeholder="Prerequisite requirement"/>
+        <a class="prerequisite-control" data-action="delete" data-index="{{i}}" title="Delete prerequisite">
+          <i class="fas fa-trash"></i>
+        </a>
+      </li>
+      {{/each}}
+      <li class="prerequisite flexrow">
+        <a class="prerequisite-control" data-action="add" title="Add prerequisite">
+          <i class="fas fa-plus"></i> Add Prerequisite
+        </a>
+      </li>
+    </ol>
+  </div>
+
+  <div class="form-group">
+    <h3>Benefits</h3>
+    <ol class="benefits-list">
+      {{#each system.benefits as |benefit i|}}
+      <li class="benefit flexrow" data-index="{{i}}">
+        <input type="text" name="system.benefits.{{i}}" value="{{benefit}}" placeholder="Talent benefit"/>
+        <a class="benefit-control" data-action="delete" data-index="{{i}}" title="Delete benefit">
+          <i class="fas fa-trash"></i>
+        </a>
+      </li>
+      {{/each}}
+      <li class="benefit flexrow">
+        <a class="benefit-control" data-action="add" title="Add benefit">
+          <i class="fas fa-plus"></i> Add Benefit
+        </a>
+      </li>
+    </ol>
+  </div>
+
+  <div class="form-group">
+    <h3>Tags</h3>
+    <input type="text" name="system.tags" value="{{join system.tags ','}}" placeholder="combat,magic,skill (comma-separated)"/>
+  </div>
+</div>

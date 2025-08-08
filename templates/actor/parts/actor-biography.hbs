@@ -1,0 +1,29 @@
+{{!-- Biography Section --}}
+<div class="biography">
+  <div class="grid grid-2col">
+    <div class="left">
+      <div class="form-group">
+        <label>Appearance</label>
+        <textarea name="system.biography.appearance" rows="4">{{system.biography.appearance}}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Background Description</label>
+        <textarea name="system.background.description" rows="4">{{system.background.description}}</textarea>
+      </div>
+    </div>
+    <div class="right">
+      <div class="form-group">
+        <label>Backstory</label>
+        <textarea name="system.biography.backstory" rows="4">{{system.biography.backstory}}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Goals</label>
+        <textarea name="system.biography.goals" rows="4">{{system.biography.goals}}</textarea>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Notes</label>
+    {{editor system.notes target="system.notes" button=true owner=owner editable=editable}}
+  </div>
+</div>

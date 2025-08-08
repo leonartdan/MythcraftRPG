@@ -93,7 +93,17 @@ export class MythCraftActorSheet extends ActorSheet {
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
-      i.img = i.img || DEFAULT_TOKEN;
+      i.img = i.img || "icons/svg/item-bag.svg";
+      
+      // Calculate total modifier for skills
+      if (i.type === 'skill') {
+        const ability = i.system.ability || 'intelligence';
+        const abilityValue = context.system.attributes[ability]?.value || 0;
+        const ranks = i.system.ranks || 0;
+        const bonus = i.system.bonus || 0;
+        i.system.totalModifier = abilityValue + ranks + bonus;
+      }
+      
       // Append to gear.
       if (i.type === 'equipment') {
         gear.push(i);

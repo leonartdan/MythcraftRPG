@@ -67,6 +67,8 @@ export class MythCraftItemSheet extends ItemSheet {
       this._prepareSpellData(context);
     } else if (itemData.type === 'talent') {
       this._prepareTalentData(context);
+    } else if (itemData.type === 'skill') {
+      this._prepareSkillData(context);
     }
   }
 
@@ -180,6 +182,34 @@ export class MythCraftItemSheet extends ItemSheet {
       "lineage": "MYTHCRAFT.TalentLineage",
       "background": "MYTHCRAFT.TalentBackground"
     };
+  }
+
+  /**
+   * Prepare skill-specific data
+   */
+  _prepareSkillData(context) {
+    const actor = this.object?.parent;
+    
+    // Attribute options
+    context.attributes = {
+      "strength": "MYTHCRAFT.AbilityStr",
+      "dexterity": "MYTHCRAFT.AbilityDex",
+      "endurance": "MYTHCRAFT.AbilityEnd",
+      "intelligence": "MYTHCRAFT.AbilityInt",
+      "awareness": "MYTHCRAFT.AbilityAwr",
+      "coordination": "MYTHCRAFT.AbilityCor",
+      "willpower": "MYTHCRAFT.AbilityWil",
+      "presence": "MYTHCRAFT.AbilityPre"
+    };
+
+    // Calculate total modifier if actor is available
+    if (actor) {
+      const ability = context.system.ability || 'intelligence';
+      const abilityValue = actor.system.attributes[ability]?.value || 0;
+      const ranks = context.system.ranks || 0;
+      const bonus = context.system.bonus || 0;
+      context.system.totalModifier = abilityValue + ranks + bonus;
+    }
   }
 
   /* -------------------------------------------- */

@@ -79,6 +79,15 @@
     "SettingVariantEncumbrance": "Use Variant Encumbrance Rules",
     "SettingVariantEncumbranceHint": "Track weight and encumbrance more strictly.",
     "SettingActionPointCarryover": "Allow Action Point Carryover",
-    "SettingActionPointCarryoverHint": "Allow characters to carry over unused Action Points between turns."
+    "SettingActionPointCarryoverHint": "Allow characters to carry over unused Action Points between turns.",
+    "Initiative": "Initiative",
+    "AttributeStrength": "Strength",
+    "AttributeDexterity": "Dexterity", 
+    "AttributeEndurance": "Endurance",
+    "AttributeIntelligence": "Intelligence",
+    "AttributeAwareness": "Awareness",
+    "AttributeCoordination": "Coordination",
+    "AttributeWillpower": "Willpower",
+    "AttributePresence": "Presence"
   }
 }

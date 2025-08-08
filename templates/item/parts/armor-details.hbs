@@ -1,0 +1,57 @@
+{{!-- Armor Details Section --}}
+<div class="armor-details">
+  <div class="form-group">
+    <h3>Armor Properties</h3>
+    <div class="grid grid-2col">
+      <div>
+        <label>Armor Type</label>
+        <select name="system.type.value">
+          <option value="light" {{selected "light" system.type.value}}>Light</option>
+          <option value="medium" {{selected "medium" system.type.value}}>Medium</option>
+          <option value="heavy" {{selected "heavy" system.type.value}}>Heavy</option>
+          <option value="shield" {{selected "shield" system.type.value}}>Shield</option>
+        </select>
+      </div>
+      <div>
+        <label>Base Item</label>
+        <input type="text" name="system.type.baseItem" value="{{system.type.baseItem}}" placeholder="leather armor"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <h3>Defense</h3>
+    <div class="grid grid-3col">
+      <div>
+        <label>Defense Value</label>
+        <input type="number" name="system.defense.value" value="{{system.defense.value}}" data-dtype="Number"/>
+      </div>
+      <div>
+        <label>Max Dex Bonus</label>
+        <input type="number" name="system.defense.dex" value="{{system.defense.dex}}" data-dtype="Number" placeholder="No limit"/>
+      </div>
+      <div>
+        <label>Defense Type</label>
+        <select name="system.defense.type">
+          <option value="physical" {{selected "physical" system.defense.type}}>Physical</option>
+          <option value="mental" {{selected "mental" system.defense.type}}>Mental</option>
+          <option value="social" {{selected "social" system.defense.type}}>Social</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="grid grid-3col">
+      <div>
+        <label><input type="checkbox" name="system.equipped" {{checked system.equipped}}/> Equipped</label>
+      </div>
+      <div>
+        <label><input type="checkbox" name="system.proficient" {{checked system.proficient}}/> Proficient</label>
+      </div>
+      <div>
+        <label><input type="checkbox" name="system.stealth" {{checked system.stealth}}/> Stealth Disadvantage</label>
+      </div>
+    </div>
+  </div>
+</div>

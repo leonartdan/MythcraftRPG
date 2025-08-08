@@ -1,0 +1,41 @@
+{{!-- Item Details Section --}}
+<div class="item-details">
+  <div class="grid grid-3col">
+    <div>
+      <label>Quantity</label>
+      <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number"/>
+    </div>
+    <div>
+      <label>Weight (lbs)</label>
+      <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+    </div>
+    <div>
+      <label>Cost</label>
+      <div class="flexrow">
+        <input type="number" name="system.cost.value" value="{{system.cost.value}}" data-dtype="Number"/>
+        <select name="system.cost.denomination">
+          <option value="cp" {{selected "cp" system.cost.denomination}}>CP</option>
+          <option value="sp" {{selected "sp" system.cost.denomination}}>SP</option>
+          <option value="gp" {{selected "gp" system.cost.denomination}}>GP</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  
+  <div class="grid grid-2col">
+    <div>
+      <label>Rarity</label>
+      <select name="system.rarity">
+        <option value="common" {{selected "common" system.rarity}}>Common</option>
+        <option value="uncommon" {{selected "uncommon" system.rarity}}>Uncommon</option>
+        <option value="rare" {{selected "rare" system.rarity}}>Rare</option>
+        <option value="very rare" {{selected "very rare" system.rarity}}>Very Rare</option>
+        <option value="legendary" {{selected "legendary" system.rarity}}>Legendary</option>
+        <option value="artifact" {{selected "artifact" system.rarity}}>Artifact</option>
+      </select>
+    </div>
+    <div>
+      <label><input type="checkbox" name="system.identified" {{checked system.identified}}/> Identified</label>
+    </div>
+  </div>
+</div>
