@@ -119,24 +119,17 @@ export class MythCraftItem extends Item {
     
     // Get damage parts from weapon
     const damageParts = this.system.damage.parts || [["1d6", "bludgeoning"]];
-    const damageRolls = [];
-    
-    for (let [formula, type] of damageParts) {
-      const modifiedFormula = `${formula} + ${attributeMod}`;
-      const roll = new Roll(modifiedFormula, rollData);
-      damageRolls.push({
-        roll: roll,
-        type: type
-      });
-    }
     
     const flavor = `${this.name} - Damage Roll`;
     
     // Create individual damage roll messages
-    for (let damage of damageRolls) {
-      await damage.roll.toMessage({
+    for (let [formula, type] of damageParts) {
+      const modifiedFormula = `${formula} + ${attributeMod}`;
+      const roll = new Roll(modifiedFormula, rollData);
+      
+      await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: `${flavor} (${damage.type})`,
+        flavor: `${flavor} (${type})`,
         rollMode: game.settings.get('core', 'rollMode'),
       });
     }
@@ -165,6 +158,13 @@ export class MythCraftItem extends Item {
       return;
     }
 
+    // Check if actor has enough SP
+    const spCost = this.system.spellPointCost || 1;
+    if (actor.system.spellPoints && actor.system.spellPoints.value < spCost) {
+      ui.notifications.warn(`Not enough Spell Points! Need ${spCost}, have ${actor.system.spellPoints.value}`);
+      return;
+    }
+
     const rollData = this.getRollData();
     
     // Create spell cast message
@@ -174,15 +174,19 @@ export class MythCraftItem extends Item {
         <p><strong>Source:</strong> ${magicSource.capitalize()}</p>
         <p><strong>Level:</strong> ${this.system.level}</p>
         <p><strong>AP Cost:</strong> ${apCost}</p>
+        <p><strong>SP Cost:</strong> ${spCost}</p>
         <div class="spell-description">
           ${this.system.description}
         </div>
       </div>
     `;
 
-    // Spend the AP
+    // Spend the AP and SP
     if (!options.preview) {
       await actor.spendActionPoints(apCost);
+      if (actor.system.spellPoints) {
+        await actor.update({"system.spellPoints.value": actor.system.spellPoints.value - spCost});
+      }
     }
 
     // Handle spell attacks or damage if configured
@@ -248,6 +252,36 @@ export class MythCraftItem extends Item {
     return ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       content: content,
+      rollMode: game.settings.get('core', 'rollMode'),
+    });
+  }
+
+  /**
+   * Roll a skill check
+   */
+  async rollSkill(options = {}) {
+    if (this.type !== 'skill') return;
+    
+    const actor = this.actor;
+    if (!actor) return;
+
+    const rollData = this.getRollData();
+    
+    // Calculate total modifier: ability modifier + ranks + bonus
+    const ability = this.system.governingAttribute || this.system.ability || 'intelligence';
+    const abilityValue = actor.system.attributes[ability]?.value || 0;
+    const ranks = this.system.ranks || 0;
+    const bonus = this.system.bonus || 0;
+    const totalModifier = abilityValue + ranks + bonus;
+
+    const formula = `1d20 + ${totalModifier}`;
+    const roll = new Roll(formula, rollData);
+    
+    const flavor = `${this.name} Skill Check`;
+    
+    return roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: flavor,
       rollMode: game.settings.get('core', 'rollMode'),
     });
   }
