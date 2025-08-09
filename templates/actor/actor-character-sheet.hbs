@@ -2,36 +2,29 @@
 
   {{!-- Sheet Header --}}
   <header class="sheet-header">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-    <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Character Name"/></h1>
-      <div class="grid grid-4col">
-        <div class="resource">
-          <label class="resource-label">Level</label>
-          <input type="number" name="system.level.value" value="{{system.level.value}}" data-dtype="Number"/>
-        </div>
-        <div class="resource">
-          <label class="resource-label">Speed</label>
-          <input type="number" name="system.speed.value" value="{{system.speed.value}}" data-dtype="Number"/>
-          <span>{{system.speed.units}}</span>
-        </div>
-        <div class="lineage">
-          <label class="resource-label">Lineage</label>
-          <input type="text" name="system.lineage.name" value="{{system.lineage.name}}" placeholder="Lineage"/>
-          <input type="text" name="system.lineage.sublineage" value="{{system.lineage.sublineage}}" placeholder="Sublineage"/>
-        </div>
-        <div class="background">
-          <label class="resource-label">Background</label>
-          <input type="text" name="system.background.name" value="{{system.background.name}}" placeholder="Background"/>
-        </div>
+    <div class="header-grid">
+      <div class="character-name">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="Character Name"/>
       </div>
-      <div class="grid grid-2col">
-        <div class="profession">
-          <label class="resource-label">Profession</label>
-          <input type="text" name="system.profession.name" value="{{system.profession.name}}" placeholder="Profession"/>
-        </div>
-        <div class="resource">
-        </div>
+      <div class="header-portrait">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+      </div>
+      <div class="header-field">
+        <label class="resource-label">Level</label>
+        <input type="number" name="system.level.value" value="{{system.level.value}}" data-dtype="Number"/>
+      </div>
+      <div class="header-field lineage">
+        <label class="resource-label">Lineage</label>
+        <input type="text" name="system.lineage.name" value="{{system.lineage.name}}" placeholder="Lineage"/>
+        <input type="text" name="system.lineage.sublineage" value="{{system.lineage.sublineage}}" placeholder="Sublineage"/>
+      </div>
+      <div class="header-field background">
+        <label class="resource-label">Background</label>
+        <input type="text" name="system.background.name" value="{{system.background.name}}" placeholder="Background"/>
+      </div>
+      <div class="header-field profession">
+        <label class="resource-label">Profession</label>
+        <input type="text" name="system.profession.name" value="{{system.profession.name}}" placeholder="Profession"/>
       </div>
     </div>
   </header>
@@ -91,10 +84,17 @@
             <input type="number" name="system.actionPoints.carried" value="{{system.actionPoints.carried}}" data-dtype="Number"/>
             <span> / {{system.actionPoints.carryLimit}}</span>
           </div>
+          <div class="resource-content">
+            <label>Max Carried:</label>
+            <span>{{system.actionPoints.maxCarried}}</span>
+          </div>
+          <div class="resource-content">
+            <label>Speed:</label>
+            <input type="number" name="system.speed.value" value="{{system.speed.value}}" data-dtype="Number"/>
+            <span>{{system.speed.units}}</span>
+          </div>
           <div class="resource-actions">
             <button type="button" class="ap-spend" data-cost="1">Spend 1</button>
-            <button type="button" class="ap-rest" data-rest-type="short">Short Rest</button>
-            <button type="button" class="ap-rest" data-rest-type="long">Long Rest</button>
           </div>
         </div>
 
@@ -102,6 +102,10 @@
         <div class="resource initiative">
           <label class="resource-label">Initiative</label>
           <div class="resource-content">
+            <div class="initiative-bonus">
+              <label>Bonus:</label>
+              <span>{{numberFormat system.initiative.bonus decimals=0 sign=true}}</span>
+            </div>
             <button type="button" class="initiative-roll rollable">
               Roll Initiative
             </button>
@@ -185,18 +189,6 @@
               <i class="fas fa-dice-d20"></i>
             </a>
           </div>
-        </div>
-      </div>
-
-      {{!-- Magic Sources --}}
-      <div class="magic-sources">
-        <h3>Magic Sources</h3>
-        <div class="grid grid-5col">
-          <label><input type="checkbox" name="system.magicSources.arcane" {{checked system.magicSources.arcane}}/> Arcane</label>
-          <label><input type="checkbox" name="system.magicSources.divine" {{checked system.magicSources.divine}}/> Divine</label>
-          <label><input type="checkbox" name="system.magicSources.occult" {{checked system.magicSources.occult}}/> Occult</label>
-          <label><input type="checkbox" name="system.magicSources.primal" {{checked system.magicSources.primal}}/> Primal</label>
-          <label><input type="checkbox" name="system.magicSources.psionic" {{checked system.magicSources.psionic}}/> Psionic</label>
         </div>
       </div>
 
@@ -409,6 +401,18 @@
 
     {{!-- Spells Tab --}}
     <div class="tab spells" data-group="primary" data-tab="spells">
+      {{!-- Magic Sources --}}
+      <div class="magic-sources">
+        <h3>Magic Sources</h3>
+        <div class="grid grid-5col">
+          <label><input type="checkbox" name="system.magicSources.arcane" {{checked system.magicSources.arcane}}/> Arcane</label>
+          <label><input type="checkbox" name="system.magicSources.divine" {{checked system.magicSources.divine}}/> Divine</label>
+          <label><input type="checkbox" name="system.magicSources.occult" {{checked system.magicSources.occult}}/> Occult</label>
+          <label><input type="checkbox" name="system.magicSources.primal" {{checked system.magicSources.primal}}/> Primal</label>
+          <label><input type="checkbox" name="system.magicSources.psionic" {{checked system.magicSources.psionic}}/> Psionic</label>
+        </div>
+      </div>
+
       <h3 class="items-header">
         <span>Spells</span>
         <a class="item-control item-create" data-type="spell" title="Create spell">

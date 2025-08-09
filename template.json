@@ -15,7 +15,8 @@
           "value": 3,
           "max": 3,
           "carried": 0,
-          "carryLimit": 1
+          "carryLimit": 1,
+          "maxCarried": 1
         },
         "speed": {
           "value": 20,
@@ -57,6 +58,9 @@
         },
         "level": {
           "value": 1
+        },
+        "initiative": {
+          "bonus": 0
         },
         "notes": ""
       },

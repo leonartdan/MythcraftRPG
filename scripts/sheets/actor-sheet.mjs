@@ -190,7 +190,6 @@ export class MythCraftActorSheet extends ActorSheet {
 
     // Action Point management
     html.find('.ap-spend').click(this._onSpendAP.bind(this));
-    html.find('.ap-rest').click(this._onRest.bind(this));
 
     // Item rolls
     html.find('.item-roll').click(this._onItemRoll.bind(this));
@@ -299,18 +298,6 @@ export class MythCraftActorSheet extends ActorSheet {
     event.preventDefault();
     const cost = parseInt(event.currentTarget.dataset.cost) || 1;
     await this.actor.spendActionPoints(cost);
-  }
-
-  /**
-   * Handle rest
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  async _onRest(event) {
-    event.preventDefault();
-    const restType = event.currentTarget.dataset.restType;
-    const shortRest = restType === 'short';
-    await this.actor.rest(shortRest);
   }
 
   /**
