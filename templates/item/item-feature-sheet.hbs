@@ -1,0 +1,66 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="item-name"><input name="name" type="text" value="{{item.name}}" placeholder="Feature Name"/></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Details</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      
+      {{!-- Basic Properties --}}
+      <div class="form-group">
+        <h3>Basic Properties</h3>
+        <div class="grid grid-2col">
+          <div>
+            <label>Feature Type</label>
+            <select name="system.featureType">
+              <option value="general" {{selected "general" system.featureType}}>General</option>
+              <option value="racial" {{selected "racial" system.featureType}}>Racial</option>
+              <option value="class" {{selected "class" system.featureType}}>Class</option>
+              <option value="background" {{selected "background" system.featureType}}>Background</option>
+              <option value="magical" {{selected "magical" system.featureType}}>Magical</option>
+            </select>
+          </div>
+          <div>
+            <label>Source</label>
+            <input type="text" name="system.source" value="{{system.source}}" placeholder="e.g., Lineage, Background, Class"/>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Tags --}}
+      <div class="form-group">
+        <h3>Tags</h3>
+        <div class="tags-container">
+          {{#each system.tags as |tag|}}
+          <span class="tag">{{tag}}</span>
+          {{/each}}
+        </div>
+        <input type="text" name="system.tags" value="{{system.tags}}" placeholder="passive,active,utility (comma-separated)"/>
+      </div>
+
+    </div>
+
+  </section>
+</form>

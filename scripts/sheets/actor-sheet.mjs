@@ -82,6 +82,7 @@ export class MythCraftActorSheet extends ActorSheet {
     const weapons = [];
     const armor = [];
     const talents = [];
+    const features = [];
     const spells = {
       arcane: [],
       divine: [],
@@ -97,7 +98,7 @@ export class MythCraftActorSheet extends ActorSheet {
       
       // Calculate total modifier for skills
       if (i.type === 'skill') {
-        const ability = i.system.ability || 'intelligence';
+        const ability = i.system.governingAttribute || i.system.ability || 'intelligence';
         const abilityValue = context.system.attributes[ability]?.value || 0;
         const ranks = i.system.ranks || 0;
         const bonus = i.system.bonus || 0;
@@ -120,6 +121,10 @@ export class MythCraftActorSheet extends ActorSheet {
       else if (i.type === 'talent') {
         talents.push(i);
       }
+      // Append to features.
+      else if (i.type === 'feature') {
+        features.push(i);
+      }
       // Append to spells.
       else if (i.type === 'spell') {
         const source = i.system.magicSource || 'arcane';
@@ -138,6 +143,7 @@ export class MythCraftActorSheet extends ActorSheet {
     context.weapons = weapons;
     context.armor = armor;
     context.talents = talents;
+    context.features = features;
     context.spells = spells;
     context.skills = skills;
   }
@@ -188,6 +194,10 @@ export class MythCraftActorSheet extends ActorSheet {
 
     // Item rolls
     html.find('.item-roll').click(this._onItemRoll.bind(this));
+
+    // Skill inline editing
+    html.find('.skill-ranks-input').change(this._onSkillRanksChange.bind(this));
+    html.find('.skill-attribute-select').change(this._onSkillAttributeChange.bind(this));
 
     // Drag events for macros.
     if (this.actor.isOwner) {
@@ -327,6 +337,41 @@ export class MythCraftActorSheet extends ActorSheet {
         return item.useTalent();
       default:
         return item.roll();
+    }
+  }
+
+  /**
+   * Handle skill ranks changes
+   * @param {Event} event   The originating change event
+   * @private
+   */
+  async _onSkillRanksChange(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const newRanks = parseInt(event.currentTarget.value) || 0;
+    
+    if (item) {
+      await item.update({"system.ranks": newRanks});
+    }
+  }
+
+  /**
+   * Handle skill governing attribute changes
+   * @param {Event} event   The originating change event
+   * @private
+   */
+  async _onSkillAttributeChange(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const newAttribute = event.currentTarget.value;
+    
+    if (item) {
+      await item.update({
+        "system.governingAttribute": newAttribute,
+        "system.ability": newAttribute
+      });
     }
   }
 }

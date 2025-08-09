@@ -46,7 +46,7 @@ Hooks.once('init', async function() {
   
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("mythcraft", MythCraftItemSheet, { 
-    types: ["weapon", "armor", "equipment", "talent", "spell", "skill"], 
+    types: ["weapon", "armor", "equipment", "talent", "spell", "skill", "feature"], 
     makeDefault: true 
   });
 
@@ -135,6 +135,11 @@ function registerHandlebarsHelpers() {
   // selected helper - returns "selected" if values match, empty string otherwise
   Handlebars.registerHelper('selected', function(option, value) {
     return option === value ? 'selected' : '';
+  });
+
+  // eq helper - returns true if values are equal
+  Handlebars.registerHelper('eq', function(a, b) {
+    return a === b;
   });
 }
 

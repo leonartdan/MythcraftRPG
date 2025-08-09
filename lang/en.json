@@ -10,7 +10,8 @@
       "Equipment": "Equipment",
       "Talent": "Talent",
       "Spell": "Spell",
-      "Skill": "Skill"
+      "Skill": "Skill",
+      "Feature": "Feature"
     },
     "AbilityStr": "Strength",
     "AbilityDex": "Dexterity", 
