@@ -345,6 +345,12 @@
           </a>
         </h3>
         <ol class="items-list">
+          <li class="item flexrow item-header">
+            <div class="item-name">Name</div>
+            <div class="item-controls">Equipped</div>
+            <div class="item-controls">Defense</div>
+            <div class="item-controls">Controls</div>
+          </li>
           {{#each armor as |item id|}}
           <li class="item flexrow" data-item-id="{{item._id}}">
             <div class="item-name">
@@ -352,10 +358,10 @@
               <h4>{{item.name}}</h4>
             </div>
             <div class="item-controls">
-              <label>Equipped: <input type="checkbox" name="items.{{item._id}}.system.equipped" {{checked item.system.equipped}}/></label>
+              <input type="checkbox" name="items.{{item._id}}.system.equipped" {{checked item.system.equipped}}/>
             </div>
             <div class="item-controls">
-              Defense: {{item.system.defense.value}}
+              {{item.system.defense.value}}
             </div>
             <div class="item-controls">
               <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
