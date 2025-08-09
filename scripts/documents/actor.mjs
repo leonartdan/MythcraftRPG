@@ -74,10 +74,7 @@ export class MythCraftActor extends Actor {
   _prepareCharacterDerivedData(actorData) {
     const systemData = actorData.system;
 
-    // Calculate derived defenses based on attributes
-    systemData.defenses.physical.value = 10 + systemData.attributes.endurance.value + (systemData.defenses.physical.bonus || 0);
-    systemData.defenses.mental.value = 10 + systemData.attributes.willpower.value + (systemData.defenses.mental.bonus || 0);
-    systemData.defenses.social.value = 10 + systemData.attributes.presence.value + (systemData.defenses.social.bonus || 0);
+    // No defense calculations needed since defenses section was removed
   }
 
   /**
@@ -86,10 +83,7 @@ export class MythCraftActor extends Actor {
   _prepareNpcDerivedData(actorData) {
     const systemData = actorData.system;
 
-    // Calculate derived defenses based on attributes
-    systemData.defenses.physical.value = 10 + systemData.attributes.endurance.value + (systemData.defenses.physical.bonus || 0);
-    systemData.defenses.mental.value = 10 + systemData.attributes.willpower.value + (systemData.defenses.mental.bonus || 0);
-    systemData.defenses.social.value = 10 + systemData.attributes.presence.value + (systemData.defenses.social.bonus || 0);
+    // No defense calculations needed since defenses section was removed
   }
 
   /**

@@ -108,8 +108,8 @@ export class MythCraftItemSheet extends ItemSheet {
       "intelligence": "MYTHCRAFT.AbilityInt",
       "awareness": "MYTHCRAFT.AbilityAwr",
       "coordination": "MYTHCRAFT.AbilityCor",
-      "willpower": "MYTHCRAFT.AbilityWil",
-      "presence": "MYTHCRAFT.AbilityPre"
+      "charisma": "MYTHCRAFT.AbilityWil",
+      "luck": "MYTHCRAFT.AbilityPre"
     };
   }
 
@@ -198,8 +198,8 @@ export class MythCraftItemSheet extends ItemSheet {
       "intelligence": "MYTHCRAFT.AbilityInt",
       "awareness": "MYTHCRAFT.AbilityAwr",
       "coordination": "MYTHCRAFT.AbilityCor",
-      "willpower": "MYTHCRAFT.AbilityWil",
-      "presence": "MYTHCRAFT.AbilityPre"
+      "charisma": "MYTHCRAFT.AbilityWil",
+      "luck": "MYTHCRAFT.AbilityPre"
     };
 
     // Calculate total modifier if actor is available

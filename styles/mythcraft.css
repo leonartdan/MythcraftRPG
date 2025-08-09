@@ -103,6 +103,10 @@
   grid-template-columns: repeat(5, 1fr);
 }
 
+.mythcraft .grid-8col {
+  grid-template-columns: repeat(8, 1fr);
+}
+
 /* === RESOURCES === */
 .mythcraft .resource {
   background: rgba(255, 255, 255, 0.7);
@@ -221,6 +225,58 @@
 }
 
 .mythcraft .attribute-roll:hover {
+  color: var(--color-secondary);
+}
+
+/* Circular Attributes */
+.mythcraft .attribute-circle {
+  background: white;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  padding: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.mythcraft .attribute-circle label {
+  font-weight: bold;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.mythcraft .attribute-circle input[type="number"] {
+  width: 35px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin: 2px 0;
+}
+
+.mythcraft .attribute-circle .attribute-mod {
+  font-size: 10px;
+  color: #666;
+  font-weight: bold;
+  margin: 1px 0;
+}
+
+.mythcraft .attribute-circle .attribute-roll {
+  color: var(--color-primary);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.mythcraft .attribute-circle .attribute-roll:hover {
   color: var(--color-secondary);
 }
 

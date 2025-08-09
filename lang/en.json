@@ -18,8 +18,8 @@
     "AbilityInt": "Intelligence",
     "AbilityAwr": "Awareness",
     "AbilityCor": "Coordination",
-    "AbilityWil": "Willpower",
-    "AbilityPre": "Presence",
+    "AbilityWil": "Charisma",
+    "AbilityPre": "Luck",
     "WeaponMelee": "Melee",
     "WeaponRanged": "Ranged",
     "WeaponThrown": "Thrown",
@@ -87,7 +87,7 @@
     "AttributeIntelligence": "Intelligence",
     "AttributeAwareness": "Awareness",
     "AttributeCoordination": "Coordination",
-    "AttributeWillpower": "Willpower",
-    "AttributePresence": "Presence"
+    "AttributeWillpower": "Charisma",
+    "AttributePresence": "Luck"
   }
 }

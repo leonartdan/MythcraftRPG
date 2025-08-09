@@ -1,0 +1,14 @@
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.webp
+node_modules/
+dist/
+*.log
+.DS_Store
+.env
+.env.local
+.vscode/
+.idea/

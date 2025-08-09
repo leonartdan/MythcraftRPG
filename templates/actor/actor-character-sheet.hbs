@@ -5,15 +5,10 @@
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Character Name"/></h1>
-      <div class="grid grid-3col">
+      <div class="grid grid-2col">
         <div class="resource">
           <label class="resource-label">Level</label>
           <input type="number" name="system.level.value" value="{{system.level.value}}" data-dtype="Number"/>
-        </div>
-        <div class="resource">
-          <label class="resource-label">Experience</label>
-          <input type="number" name="system.experience.value" value="{{system.experience.value}}" data-dtype="Number"/>
-          <span> / {{system.experience.max}}</span>
         </div>
         <div class="resource">
           <label class="resource-label">Speed</label>
@@ -73,6 +68,18 @@
             <label>Temp HP:</label>
             <input type="number" name="system.health.temp" value="{{system.health.temp}}" data-dtype="Number"/>
           </div>
+          <div class="resource-content">
+            <label>Armor Rating:</label>
+            <input type="number" name="system.health.armorRating" value="{{system.health.armorRating}}" data-dtype="Number"/>
+          </div>
+          <div class="resource-content">
+            <label>Shield:</label>
+            <input type="number" name="system.health.shield" value="{{system.health.shield}}" data-dtype="Number"/>
+          </div>
+          <div class="resource-content">
+            <label>Death Points:</label>
+            <input type="number" name="system.health.deathPoints" value="{{system.health.deathPoints}}" data-dtype="Number"/>
+          </div>
         </div>
 
         {{!-- Action Points --}}
@@ -109,38 +116,78 @@
       {{!-- Attributes --}}
       <div class="attributes">
         <h3>Attributes</h3>
-        <div class="grid grid-4col">
-          {{#each system.attributes as |attribute key|}}
-          <div class="attribute flexrow flex-group-center">
-            <label for="system.attributes.{{key}}.value" class="resource-label">{{titleCase key}}</label>
-            <input type="number" name="system.attributes.{{key}}.value" value="{{attribute.value}}" data-dtype="Number"/>
-            <span class="attribute-mod">{{numberFormat attribute.mod decimals=0 sign=true}}</span>
-            <a class="attribute-roll rollable" data-attribute="{{key}}" title="Roll {{titleCase key}}">
+        <div class="grid grid-8col">
+          {{!-- STR --}}
+          <div class="attribute attribute-circle flexcol flex-group-center">
+            <label for="system.attributes.strength.value" class="resource-label">STR</label>
+            <input type="number" name="system.attributes.strength.value" value="{{system.attributes.strength.value}}" data-dtype="Number"/>
+            <span class="attribute-mod">{{numberFormat system.attributes.strength.mod decimals=0 sign=true}}</span>
+            <a class="attribute-roll rollable" data-attribute="strength" title="Roll Strength">
               <i class="fas fa-dice-d20"></i>
             </a>
           </div>
-          {{/each}}
-        </div>
-      </div>
-
-      {{!-- Defenses --}}
-      <div class="defenses">
-        <h3>Defenses</h3>
-        <div class="grid grid-3col">
-          <div class="defense">
-            <label>Physical Defense</label>
-            <span class="defense-value">{{system.defenses.physical.value}}</span>
-            <input type="number" name="system.defenses.physical.bonus" value="{{system.defenses.physical.bonus}}" data-dtype="Number" placeholder="Bonus"/>
+          {{!-- DEX --}}
+          <div class="attribute attribute-circle flexcol flex-group-center">
+            <label for="system.attributes.dexterity.value" class="resource-label">DEX</label>
+            <input type="number" name="system.attributes.dexterity.value" value="{{system.attributes.dexterity.value}}" data-dtype="Number"/>
+            <span class="attribute-mod">{{numberFormat system.attributes.dexterity.mod decimals=0 sign=true}}</span>
+            <a class="attribute-roll rollable" data-attribute="dexterity" title="Roll Dexterity">
+              <i class="fas fa-dice-d20"></i>
+            </a>
           </div>
-          <div class="defense">
-            <label>Mental Defense</label>
-            <span class="defense-value">{{system.defenses.mental.value}}</span>
-            <input type="number" name="system.defenses.mental.bonus" value="{{system.defenses.mental.bonus}}" data-dtype="Number" placeholder="Bonus"/>
+          {{!-- END --}}
+          <div class="attribute attribute-circle flexcol flex-group-center">
+            <label for="system.attributes.endurance.value" class="resource-label">END</label>
+            <input type="number" name="system.attributes.endurance.value" value="{{system.attributes.endurance.value}}" data-dtype="Number"/>
+            <span class="attribute-mod">{{numberFormat system.attributes.endurance.mod decimals=0 sign=true}}</span>
+            <a class="attribute-roll rollable" data-attribute="endurance" title="Roll Endurance">
+              <i class="fas fa-dice-d20"></i>
+            </a>
           </div>
-          <div class="defense">
-            <label>Social Defense</label>
-            <span class="defense-value">{{system.defenses.social.value}}</span>
-            <input type="number" name="system.defenses.social.bonus" value="{{system.defenses.social.bonus}}" data-dtype="Number" placeholder="Bonus"/>
+          {{!-- AWR --}}
+          <div class="attribute attribute-circle flexcol flex-group-center">
+            <label for="system.attributes.awareness.value" class="resource-label">AWR</label>
+            <input type="number" name="system.attributes.awareness.value" value="{{system.attributes.awareness.value}}" data-dtype="Number"/>
+            <span class="attribute-mod">{{numberFormat system.attributes.awareness.mod decimals=0 sign=true}}</span>
+            <a class="attribute-roll rollable" data-attribute="awareness" title="Roll Awareness">
+              <i class="fas fa-dice-d20"></i>
+            </a>
+          </div>
+          {{!-- INT --}}
+          <div class="attribute attribute-circle flexcol flex-group-center">
+            <label for="system.attributes.intelligence.value" class="resource-label">INT</label>
+            <input type="number" name="system.attributes.intelligence.value" value="{{system.attributes.intelligence.value}}" data-dtype="Number"/>
+            <span class="attribute-mod">{{numberFormat system.attributes.intelligence.mod decimals=0 sign=true}}</span>
+            <a class="attribute-roll rollable" data-attribute="intelligence" title="Roll Intelligence">
+              <i class="fas fa-dice-d20"></i>
+            </a>
+          </div>
+          {{!-- CHA --}}
+          <div class="attribute attribute-circle flexcol flex-group-center">
+            <label for="system.attributes.charisma.value" class="resource-label">CHA</label>
+            <input type="number" name="system.attributes.charisma.value" value="{{system.attributes.charisma.value}}" data-dtype="Number"/>
+            <span class="attribute-mod">{{numberFormat system.attributes.charisma.mod decimals=0 sign=true}}</span>
+            <a class="attribute-roll rollable" data-attribute="charisma" title="Roll Charisma">
+              <i class="fas fa-dice-d20"></i>
+            </a>
+          </div>
+          {{!-- LUCK --}}
+          <div class="attribute attribute-circle flexcol flex-group-center">
+            <label for="system.attributes.luck.value" class="resource-label">LUCK</label>
+            <input type="number" name="system.attributes.luck.value" value="{{system.attributes.luck.value}}" data-dtype="Number"/>
+            <span class="attribute-mod">{{numberFormat system.attributes.luck.mod decimals=0 sign=true}}</span>
+            <a class="attribute-roll rollable" data-attribute="luck" title="Roll Luck">
+              <i class="fas fa-dice-d20"></i>
+            </a>
+          </div>
+          {{!-- COR --}}
+          <div class="attribute attribute-circle flexcol flex-group-center">
+            <label for="system.attributes.coordination.value" class="resource-label">COR</label>
+            <input type="number" name="system.attributes.coordination.value" value="{{system.attributes.coordination.value}}" data-dtype="Number"/>
+            <span class="attribute-mod">{{numberFormat system.attributes.coordination.mod decimals=0 sign=true}}</span>
+            <a class="attribute-roll rollable" data-attribute="coordination" title="Roll Coordination">
+              <i class="fas fa-dice-d20"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -155,6 +202,42 @@
           <label><input type="checkbox" name="system.magicSources.primal" {{checked system.magicSources.primal}}/> Primal</label>
           <label><input type="checkbox" name="system.magicSources.psionic" {{checked system.magicSources.psionic}}/> Psionic</label>
         </div>
+      </div>
+
+      {{!-- Skills --}}
+      <div class="skills">
+        <h3 class="items-header">
+          <span>Skills</span>
+          <a class="item-control item-create" data-type="skill" title="Create skill">
+            <i class="fas fa-plus"></i>
+          </a>
+        </h3>
+        <ol class="items-list">
+          <li class="item flexrow item-header">
+            <div class="item-name">Name</div>
+            <div class="item-controls">Ranks</div>
+            <div class="item-controls">Total Bonus</div>
+            <div class="item-controls">Controls</div>
+          </li>
+          {{#each skills as |item id|}}
+          <li class="item flexrow" data-item-id="{{item._id}}">
+            <div class="item-name">
+              <h4>{{item.name}}</h4>
+            </div>
+            <div class="item-controls">
+              {{item.system.ranks}}
+            </div>
+            <div class="item-controls">
+              {{numberFormat item.system.totalModifier decimals=0 sign=true}}
+            </div>
+            <div class="item-controls">
+              <a class="item-control item-roll" data-roll-type="skill" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
+              <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+              <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            </div>
+          </li>
+          {{/each}}
+        </ol>
       </div>
 
       {{!-- Talents --}}
