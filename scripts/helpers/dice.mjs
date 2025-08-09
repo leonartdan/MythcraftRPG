@@ -181,7 +181,7 @@ export function calculateDamageReduction(damage, damageType, target) {
  */
 export async function generateAbilityScores(options = {}) {
   const method = options.method || 'pointBuy';
-  const abilities = ['strength', 'dexterity', 'endurance', 'intelligence', 'awareness', 'coordination', 'willpower', 'presence'];
+  const abilities = ['strength', 'dexterity', 'endurance', 'intelligence', 'awareness', 'coordination', 'charisma', 'luck'];
   const scores = {};
   
   if (method === 'roll') {
