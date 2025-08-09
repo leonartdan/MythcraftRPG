@@ -131,6 +131,11 @@ function registerHandlebarsHelpers() {
       word.charAt(0).toUpperCase() + word.slice(1)
     ).join(' ');
   });
+
+  // selected helper - returns "selected" if values match, empty string otherwise
+  Handlebars.registerHelper('selected', function(option, value) {
+    return option === value ? 'selected' : '';
+  });
 }
 
 /* ------------------------------------ */
