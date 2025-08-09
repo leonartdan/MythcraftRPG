@@ -251,4 +251,34 @@ export class MythCraftItem extends Item {
       rollMode: game.settings.get('core', 'rollMode'),
     });
   }
+
+  /**
+   * Roll a skill check
+   */
+  async rollSkill(options = {}) {
+    if (this.type !== 'skill') return;
+    
+    const actor = this.actor;
+    if (!actor) return;
+
+    const rollData = this.getRollData();
+    
+    // Calculate total modifier: ability modifier + ranks + bonus
+    const ability = this.system.governingAttribute || this.system.ability || 'intelligence';
+    const abilityValue = actor.system.attributes[ability]?.value || 0;
+    const ranks = this.system.ranks || 0;
+    const bonus = this.system.bonus || 0;
+    const totalModifier = abilityValue + ranks + bonus;
+
+    const formula = `1d20 + ${totalModifier}`;
+    const roll = new Roll(formula, rollData);
+    
+    const flavor = `${this.name} Skill Check`;
+    
+    return roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: flavor,
+      rollMode: game.settings.get('core', 'rollMode'),
+    });
+  }
 }

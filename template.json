@@ -97,6 +97,14 @@
           "occult": false,
           "primal": false,
           "psionic": false
+        },
+        "spellPoints": {
+          "value": 0,
+          "max": 0
+        },
+        "spellPower": {
+          "value": 0,
+          "max": 0
         }
       },
       "npc": {
@@ -254,7 +262,8 @@
         "dc": null,
         "scaling": "spell"
       },
-      "actionCost": 3
+      "actionCost": 3,
+      "spellPointCost": 1
     },
     "skill": {
       "templates": ["base"],

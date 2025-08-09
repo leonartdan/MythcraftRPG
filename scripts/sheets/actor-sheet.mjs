@@ -322,6 +322,8 @@ export class MythCraftActorSheet extends ActorSheet {
         return item.castSpell();
       case 'talent':
         return item.useTalent();
+      case 'skill':
+        return item.rollSkill();
       default:
         return item.roll();
     }
