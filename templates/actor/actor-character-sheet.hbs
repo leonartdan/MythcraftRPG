@@ -16,7 +16,6 @@
       <div class="header-field lineage">
         <label class="resource-label">Lineage</label>
         <input type="text" name="system.lineage.name" value="{{system.lineage.name}}" placeholder="Lineage"/>
-        <input type="text" name="system.lineage.sublineage" value="{{system.lineage.sublineage}}" placeholder="Sublineage"/>
       </div>
       <div class="header-field background">
         <label class="resource-label">Background</label>
@@ -80,13 +79,9 @@
             <input type="number" name="system.actionPoints.max" value="{{system.actionPoints.max}}" data-dtype="Number"/>
           </div>
           <div class="resource-content">
-            <label>Carried:</label>
+            <label>Carried: </label>
             <input type="number" name="system.actionPoints.carried" value="{{system.actionPoints.carried}}" data-dtype="Number"/>
-            <span> / {{system.actionPoints.carryLimit}}</span>
-          </div>
-          <div class="resource-content">
-            <label>Max Carried:</label>
-            <span>{{system.actionPoints.maxCarried}}</span>
+            <span> / {{system.actionPoints.maxCarried}}</span>
           </div>
           <div class="resource-content">
             <label>Speed:</label>
@@ -190,55 +185,6 @@
             </a>
           </div>
         </div>
-      </div>
-
-      {{!-- Skills --}}
-      <div class="skills">
-        <h3 class="items-header">
-          <span>Skills</span>
-          <a class="item-control item-create" data-type="skill" title="Create skill">
-            <i class="fas fa-plus"></i>
-          </a>
-        </h3>
-        <ol class="items-list">
-          <li class="item flexrow item-header">
-            <div class="item-name">Name</div>
-            <div class="item-controls">Governing Attribute</div>
-            <div class="item-controls">Ranks</div>
-            <div class="item-controls">Total Bonus</div>
-            <div class="item-controls">Controls</div>
-          </li>
-          {{#each skills as |item id|}}
-          <li class="item flexrow" data-item-id="{{item._id}}">
-            <div class="item-name">
-              <h4>{{item.name}}</h4>
-            </div>
-            <div class="item-controls">
-              <select name="items.{{item._id}}.system.governingAttribute" data-item-id="{{item._id}}" class="skill-attribute-select">
-                <option value="strength" {{#if (eq item.system.governingAttribute "strength")}}selected{{/if}}>STR</option>
-                <option value="dexterity" {{#if (eq item.system.governingAttribute "dexterity")}}selected{{/if}}>DEX</option>
-                <option value="endurance" {{#if (eq item.system.governingAttribute "endurance")}}selected{{/if}}>END</option>
-                <option value="awareness" {{#if (eq item.system.governingAttribute "awareness")}}selected{{/if}}>AWR</option>
-                <option value="intelligence" {{#if (eq item.system.governingAttribute "intelligence")}}selected{{/if}}>INT</option>
-                <option value="charisma" {{#if (eq item.system.governingAttribute "charisma")}}selected{{/if}}>CHA</option>
-                <option value="luck" {{#if (eq item.system.governingAttribute "luck")}}selected{{/if}}>LUCK</option>
-                <option value="coordination" {{#if (eq item.system.governingAttribute "coordination")}}selected{{/if}}>COR</option>
-              </select>
-            </div>
-            <div class="item-controls">
-              <input type="number" name="items.{{item._id}}.system.ranks" value="{{item.system.ranks}}" data-item-id="{{item._id}}" class="skill-ranks-input" data-dtype="Number"/>
-            </div>
-            <div class="item-controls">
-              {{numberFormat item.system.totalModifier decimals=0 sign=true}}
-            </div>
-            <div class="item-controls">
-              <a class="item-control item-roll" data-roll-type="skill" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
-              <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-              <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-            </div>
-          </li>
-          {{/each}}
-        </ol>
       </div>
 
       {{!-- Talents --}}
@@ -401,6 +347,55 @@
 
     {{!-- Spells Tab --}}
     <div class="tab spells" data-group="primary" data-tab="spells">
+      {{!-- Skills --}}
+      <div class="skills">
+        <h3 class="items-header">
+          <span>Skills</span>
+          <a class="item-control item-create" data-type="skill" title="Create skill">
+            <i class="fas fa-plus"></i>
+          </a>
+        </h3>
+        <ol class="items-list">
+          <li class="item flexrow item-header">
+            <div class="item-name">Name</div>
+            <div class="item-controls">Governing Attribute</div>
+            <div class="item-controls">Ranks</div>
+            <div class="item-controls">Total Bonus</div>
+            <div class="item-controls">Controls</div>
+          </li>
+          {{#each skills as |item id|}}
+          <li class="item flexrow" data-item-id="{{item._id}}">
+            <div class="item-name">
+              <h4>{{item.name}}</h4>
+            </div>
+            <div class="item-controls">
+              <select name="items.{{item._id}}.system.governingAttribute" data-item-id="{{item._id}}" class="skill-attribute-select">
+                <option value="strength" {{#if (eq item.system.governingAttribute "strength")}}selected{{/if}}>STR</option>
+                <option value="dexterity" {{#if (eq item.system.governingAttribute "dexterity")}}selected{{/if}}>DEX</option>
+                <option value="endurance" {{#if (eq item.system.governingAttribute "endurance")}}selected{{/if}}>END</option>
+                <option value="awareness" {{#if (eq item.system.governingAttribute "awareness")}}selected{{/if}}>AWR</option>
+                <option value="intelligence" {{#if (eq item.system.governingAttribute "intelligence")}}selected{{/if}}>INT</option>
+                <option value="charisma" {{#if (eq item.system.governingAttribute "charisma")}}selected{{/if}}>CHA</option>
+                <option value="luck" {{#if (eq item.system.governingAttribute "luck")}}selected{{/if}}>LUCK</option>
+                <option value="coordination" {{#if (eq item.system.governingAttribute "coordination")}}selected{{/if}}>COR</option>
+              </select>
+            </div>
+            <div class="item-controls">
+              <input type="number" name="items.{{item._id}}.system.ranks" value="{{item.system.ranks}}" data-item-id="{{item._id}}" class="skill-ranks-input" data-dtype="Number"/>
+            </div>
+            <div class="item-controls">
+              {{numberFormat item.system.totalModifier decimals=0 sign=true}}
+            </div>
+            <div class="item-controls">
+              <a class="item-control item-roll" data-roll-type="skill" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
+              <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+              <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            </div>
+          </li>
+          {{/each}}
+        </ol>
+      </div>
+
       {{!-- Magic Sources --}}
       <div class="magic-sources">
         <h3>Magic Sources</h3>

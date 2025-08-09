@@ -82,10 +82,47 @@ Hooks.once('ready', function() {
   const SYSTEM_VERSION = game.system.version;
   const MINIMUM_COMPATIBLE_VERSION = "1.0.0";
   
-  if (currentVersion === null || currentVersion < MINIMUM_COMPATIBLE_VERSION) {
+  // Initialize migration version for new worlds
+  if (currentVersion === null || currentVersion === "") {
+    game.settings.set("mythcraft", "systemMigrationVersion", SYSTEM_VERSION);
+    console.log(`MythCraft | Setting initial migration version to ${SYSTEM_VERSION}`);
+    return;
+  }
+  
+  // Check if migration is needed
+  if (isNewerVersion(SYSTEM_VERSION, currentVersion)) {
+    performSystemMigration(currentVersion, SYSTEM_VERSION);
+  }
+  
+  // Check compatibility 
+  if (isNewerVersion(MINIMUM_COMPATIBLE_VERSION, currentVersion)) {
     ui.notifications.error(`Your MythCraft system data is from a version prior to ${MINIMUM_COMPATIBLE_VERSION} and is not compatible. Please start a new world.`, {permanent: true});
   }
 });
+
+/* ------------------------------------ */
+/* System Migration						*/
+/* ------------------------------------ */
+
+/**
+ * Perform system migration between versions
+ * @param {string} currentVersion - Current system version
+ * @param {string} targetVersion - Target system version
+ */
+async function performSystemMigration(currentVersion, targetVersion) {
+  console.log(`MythCraft | Migrating system from version ${currentVersion} to ${targetVersion}`);
+  
+  try {
+    // Perform any necessary data migrations here
+    // For now, just update the version
+    await game.settings.set("mythcraft", "systemMigrationVersion", targetVersion);
+    
+    ui.notifications.info(`MythCraft | System migration completed successfully from ${currentVersion} to ${targetVersion}`);
+  } catch (error) {
+    console.error("MythCraft | Migration failed:", error);
+    ui.notifications.error("MythCraft | System migration failed. Please check the console for details.");
+  }
+}
 
 /* ------------------------------------ */
 /* System Settings						*/
