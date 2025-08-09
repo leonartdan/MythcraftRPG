@@ -564,7 +564,65 @@
   margin-bottom: 4px;
 }
 
-/* === RESPONSIVE DESIGN === */
+/* === HEALTH SECTION === */
+.mythcraft .health .resource-content.health-left-align {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.mythcraft .health .resource-content.health-left-align label {
+  min-width: 90px;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.mythcraft .health .resource-content.health-left-align input {
+  width: 50px;
+}
+
+/* === SKILL SECTION === */
+.mythcraft .skill-ranks-input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+.mythcraft .skill-attribute-select {
+  width: 60px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 11px;
+}
+
+/* === HEADER LAYOUT === */
+.mythcraft .sheet-header .lineage,
+.mythcraft .sheet-header .background,
+.mythcraft .sheet-header .profession {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  padding: 6px;
+}
+
+.mythcraft .sheet-header .lineage input,
+.mythcraft .sheet-header .background input,
+.mythcraft .sheet-header .profession input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #333;
+  border-radius: 3px;
+  width: 100%;
+  margin-bottom: 3px;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+
 @media (max-width: 768px) {
   .mythcraft .grid-4col {
     grid-template-columns: 1fr 1fr;

@@ -116,7 +116,7 @@
     }
   },
   "Item": {
-    "types": ["weapon", "armor", "equipment", "talent", "spell", "skill"],
+    "types": ["weapon", "armor", "equipment", "talent", "spell", "skill", "feature"],
     "templates": {
       "base": {
         "description": "",
@@ -259,6 +259,13 @@
       "ranks": 0,
       "bonus": 0,
       "proficient": false,
+      "tags": [],
+      "governingAttribute": "intelligence"
+    },
+    "feature": {
+      "templates": ["base"],
+      "featureType": "general",
+      "source": "",
       "tags": []
     }
   }
