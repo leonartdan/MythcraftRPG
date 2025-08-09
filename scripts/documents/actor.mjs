@@ -74,7 +74,12 @@ export class MythCraftActor extends Actor {
   _prepareCharacterDerivedData(actorData) {
     const systemData = actorData.system;
 
-    // No defense calculations needed since defenses section was removed
+    // Calculate Max Carried: 1/2 level + 1 (round up)
+    systemData.actionPoints.maxCarried = Math.ceil(systemData.level.value / 2) + 1;
+
+    // Calculate initiative bonus (Awareness + any other bonuses)
+    const awarenessValue = systemData.attributes.awareness?.value || 0;
+    systemData.initiative.bonus = awarenessValue;
   }
 
   /**
@@ -178,20 +183,35 @@ export class MythCraftActor extends Actor {
   }
 
   /**
-   * Spend action points
+   * Spend action points - first use carried points, then main pool
    * @param {number} cost The cost in action points
    * @returns {Promise<Actor>} This actor after the update
    */
   async spendActionPoints(cost) {
     const currentAP = this.system.actionPoints.value;
-    if (currentAP < cost) {
+    const currentCarried = this.system.actionPoints.carried;
+    const updates = {};
+
+    if (currentAP + currentCarried < cost) {
       ui.notifications.warn("Not enough Action Points!");
       return this;
     }
 
-    return await this.update({
-      "system.actionPoints.value": currentAP - cost
-    });
+    let remainingCost = cost;
+    
+    // First, spend from carried action points
+    if (currentCarried > 0) {
+      const spentFromCarried = Math.min(currentCarried, remainingCost);
+      updates["system.actionPoints.carried"] = currentCarried - spentFromCarried;
+      remainingCost -= spentFromCarried;
+    }
+
+    // Then, spend from main pool if needed
+    if (remainingCost > 0) {
+      updates["system.actionPoints.value"] = currentAP - remainingCost;
+    }
+
+    return await this.update(updates);
   }
 
   /**
