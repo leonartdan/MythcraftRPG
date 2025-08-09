@@ -6,7 +6,7 @@ export class MythCraftActorSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["mythcraft", "sheet", "actor"],
       template: "systems/mythcraft/templates/actor/actor-sheet.hbs",
       width: 720,

@@ -53,6 +53,9 @@ Hooks.once('init', async function() {
   // Register system settings
   registerSystemSettings();
 
+  // Register Handlebars helpers
+  registerHandlebarsHelpers();
+
   // Preload Handlebars templates
   return preloadHandlebarsTemplates();
 });
@@ -114,6 +117,19 @@ function registerSystemSettings() {
     config: true,
     default: true,
     type: Boolean
+  });
+}
+
+/* ------------------------------------ */
+/* Handlebars Helpers					*/
+/* ------------------------------------ */
+function registerHandlebarsHelpers() {
+  // titleCase helper - capitalizes the first letter of each word
+  Handlebars.registerHelper('titleCase', function(str) {
+    if (typeof str !== 'string') return str;
+    return str.toLowerCase().split(' ').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
   });
 }
 
