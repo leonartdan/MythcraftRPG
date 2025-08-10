@@ -103,8 +103,7 @@
           "max": 0
         },
         "spellPower": {
-          "value": 0,
-          "max": 0
+          "value": 0
         }
       },
       "npc": {

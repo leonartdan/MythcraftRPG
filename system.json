@@ -2,7 +2,7 @@
   "id": "mythcraft",
   "title": "MythCraft RPG",
   "description": "An implementation of the MythCraft RPG system for Foundry VTT, featuring Action Point-based combat, complex character creation, and d20 mechanics.",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "authors": [
     {
       "name": "MythCraft Development Team",

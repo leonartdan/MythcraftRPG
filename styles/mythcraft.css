@@ -18,6 +18,17 @@
   border-radius: 8px;
 }
 
+/* Fix window header text visibility */
+.mythcraft.sheet .window-header,
+.mythcraft.sheet .window-title,
+.mythcraft.sheet .header-button {
+  color: #333 !important;
+}
+
+.mythcraft.sheet .window-header .close {
+  color: #8b4513 !important;
+}
+
 .mythcraft.sheet .window-content {
   padding: 5px;
   background: none;

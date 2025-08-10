@@ -34,6 +34,7 @@
     <a class="item" data-tab="inventory">Inventory</a>
     <a class="item" data-tab="spells">Spells</a>
     <a class="item" data-tab="biography">Biography</a>
+    <a class="item" data-tab="notes">Notes</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -431,10 +432,8 @@
           </div>
           <div class="resource spell-power">
             <label class="resource-label">Spell Power</label>
-            <div class="resource-content flexrow flex-center flex-between">
+            <div class="resource-content">
               <input type="number" name="system.spellPower.value" value="{{system.spellPower.value}}" data-dtype="Number"/>
-              <span> / </span>
-              <input type="number" name="system.spellPower.max" value="{{system.spellPower.max}}" data-dtype="Number"/>
             </div>
           </div>
         </div>
@@ -523,6 +522,10 @@
           </div>
         </div>
       </div>
+    </div>
+
+    {{!-- Notes Tab --}}
+    <div class="tab notes" data-group="primary" data-tab="notes">
       <div class="form-group">
         <label>Notes</label>
         {{editor system.notes target="system.notes" button=true owner=owner editable=editable}}
